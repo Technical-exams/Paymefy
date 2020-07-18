@@ -39,12 +39,14 @@ trait EventTrait
      * @param string|\DateTimeImmutable $time
      * @return void
      */
-    protected function setTime($time)
+    protected function setTime($time=null)
     {
         if (is_string($time))
             $this->time = new \DateTimeImmutable($time);
         elseif ($time instanceof \DateTimeImmutable)
             $this->time = $time;
+        elseif (is_null($time))
+            $this->time = SystemTime::instance()->getCurrentTime();
         else
             throw new \InvalidArgumentException("Unexpected time value for event of class ".get_class($this));
     }
