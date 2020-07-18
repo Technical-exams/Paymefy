@@ -6,7 +6,7 @@ use Proweb21\Elevator\Events\EventObserver;
 use Proweb21\Elevator\Events\EventPublisher;
 use Proweb21\Elevator\Events\EventPublisherTrait;
 use Proweb21\Elevator\Events\ObservableEventSubject;
-use Proweb21\Elevator\Model\BuildingElevatorsStateFactory as Factory;
+use Proweb21\Elevator\Model\BuildingElevatorsStateFactory as StateFactory;
 
 /**
  * Service responsaible of maintaining
@@ -64,10 +64,10 @@ class ElevatorsStateService
      * @param Building $building
      * @param Factory $stateFactory
      */
-    public function __construct(Building $building, Factory $stateFactory, EventBus $bus)
+    public function __construct(Building $building, EventBus $bus)
     {
         $this->building = $building;
-        $this->state = $stateFactory->create($building);
+        $this->state = StateFactory::create($building);
         $this->bus = $bus;
         $this->observe(DomainEventPublisher::instance());
     }
