@@ -4,6 +4,7 @@
  * Collection of Elevators 
  */
 final class ElevatorCollection
+    implements \IteratorAggregate
     
 {
     /**
@@ -12,6 +13,16 @@ final class ElevatorCollection
      * @var array
      */
     protected $elevators = [];
+
+    /**
+     * Required by the \IteratorAggregate interface
+     *
+     * @return \Traversable
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->elevators);
+    }
 
     /**
      * Stores an elevator to the collection if not present

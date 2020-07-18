@@ -13,7 +13,7 @@ final class BuildingElevatorsState
      *
      * @var array
      */
-    protected $state;
+    protected $state = [];
 
     /**
      * Sets the state for an elevator in a Building
