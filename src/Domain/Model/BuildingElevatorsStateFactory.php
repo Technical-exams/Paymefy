@@ -16,10 +16,11 @@ class BuildingElevatorsStateFactory
      */
     public function create(Building $building) : BuildingElevatorsState
     {
-        $result = new BuildingElevatorsState();
+        $result = new BuildingElevatorsState();        
 
         foreach($building->getElevators() as $elevator){
-            $result->setState($elevator);
+            $flat = array_search($elevator->flat,$building->getFlats());
+            $result->setState($elevator, $flat);
         }
 
         return $result;

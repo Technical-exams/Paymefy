@@ -18,17 +18,17 @@ final class BuildingElevatorsState
     /**
      * Sets the state for an elevator in a Building
      *
-     * @param Elevator $elevator The elevator to state
-     * @return Elevator The elevator once stated
+     * @param string $elevator id The elevator to state
+     * @return string The elevator id once stated
      */
-    public function setState(Elevator $elevator): Elevator
+    public function setState(string $elevator, int $flat): string
     {
         $elevator = $this->removeState($elevator);
 
-        if (!array_key_exists($elevator->flat,$this->state))        
-            $this->state[$elevator->flat] = [$elevator->id];
+        if (!array_key_exists($flat, $this->state))        
+            $this->state[$flat] = [$elevator];
         else
-            $this->state[$elevator->flat][]=$elevator->id;
+            $this->state[$flat][]=$elevator;
         
         return $elevator;
     }
@@ -37,10 +37,10 @@ final class BuildingElevatorsState
     /**
      * Removes the state of an elevator in a Building
      *
-     * @param Elevator $elevator The elevator which state has to be removed
-     * @return Elevator The elevator once its state is removed
+     * @param string $elevator The elevator which state has to be removed
+     * @return string The elevator once its state is removed
      */
-    public function removeState(Elevator $elevator) : Elevator
+    public function removeState(string $elevator) : string
     {
         $state = $this->getState($elevator);
         
@@ -56,21 +56,21 @@ final class BuildingElevatorsState
     /**
      * Gets the state of an Elevator in a Building 
      *
-     * @param Elevator $elevator
+     * @param string $elevator
      * @return array|false the Elevator state or false if not stated in the building
      */
-    public function getState(Elevator $elevator)
+    public function getState(string $elevator)
     {
-        $id = $elevator->id;
+        
         $result = false;
         $key = false;
         $flat = 0;
 
         while ($flat<count($this->state) && !$result){
             if (is_array($this->state[$flat]))
-                $key = array_search($id,$this->state[$flat]);
+                $key = array_search($elevator,$this->state[$flat]);
             if ($key !== false)
-                $result = ["flat"=>$flat,"order"=>$key,"elevator"=>$id];
+                $result = ["flat"=>$flat,"order"=>$key,"elevator"=>$elevator];
             $flat++;
         }
 
@@ -93,8 +93,6 @@ final class BuildingElevatorsState
 
         return $result;
     }
-
-
 
 
 }
