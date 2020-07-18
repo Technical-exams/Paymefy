@@ -5,12 +5,7 @@ final class MinutePassed
     implements Event
 {
     
-    /**
-     * Which minute was passed as DateTime
-     *
-     * @var \DateTimeImmutable
-     */
-    public $time;
+    use EventTrait;
 
     /**
      * Constructor
@@ -28,12 +23,5 @@ final class MinutePassed
         $this->time = \DateTimeImmutable::createFromMutable($time);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTime(): \DateTimeImmutable
-    {
-        return $this->time;
-    }
     
 }
