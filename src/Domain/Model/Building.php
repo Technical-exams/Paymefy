@@ -59,18 +59,20 @@ final class Building
 
 
     /**
-     * Adds an Elevator to Building
+     * Adds a new Elevator to Building
      *
      * @param int $flat
-     * @return void
+     * @return Elevator The elevator created
      */
-    public function addElevator(int $flat = null)    
+    public function createElevator(int $flat = null)    
     {
         $flat = is_null($flat) ? reset($this->flats) : $flat;
         $this->validateFlat($flat);
 
         $elevator = new Elevator($flat);        
         $this->elevators->add($elevator);
+
+        return $elevator;
     }
 
     /**
@@ -78,7 +80,7 @@ final class Building
      *
      * @param string $elevator_id
      * @param integer $to_flat
-     * @return void
+     * @return Elevator The $elevator moved
      */
     public function moveElevator(string $elevator_id, int $to_flat)
     {
@@ -90,6 +92,8 @@ final class Building
             $elevator->setFlat($to_flat);
         else
             throw new \RuntimeException("Asked to move invalid elevator ${elevator_id}");
+            
+        return $elevator;
     }
 
 
