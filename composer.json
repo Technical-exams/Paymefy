@@ -1,0 +1,28 @@
+{
+    "name": "proweb21/elevator",
+    "description": "Elevator Intelligence Service",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xavi Subirà",
+            "email": "xavi@proweb21.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require":{
+        "php": "^7.2",
+        "ext-pdo": "*",
+        "ext-sqlite": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Proweb21\\Elevator\\": "src/",
+            "Proweb21\\Elevator\\App\\Simulator\\": "test/integration/",
+            "Proweb21\\Elevator\\Model\\": "src/Domain/Model"
+        }
+    }
+}
