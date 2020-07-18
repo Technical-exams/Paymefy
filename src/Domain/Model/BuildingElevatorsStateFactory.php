@@ -6,7 +6,7 @@
  * Each instance created depends on a building an its Elevators
  * 
  */
-class BuildingElevatorsStateFactory
+abstract class BuildingElevatorsStateFactory
 {
     /**
      * Factory method for creating a Building Elevators State
@@ -14,7 +14,7 @@ class BuildingElevatorsStateFactory
      * @param Building $building The Building to use for creating the State
      * @return BuildingElevatorsState The State created from the building elevators
      */
-    public function create(Building $building) : BuildingElevatorsState
+    public static function create(Building $building) : BuildingElevatorsState
     {
         $result = new BuildingElevatorsState();        
 
