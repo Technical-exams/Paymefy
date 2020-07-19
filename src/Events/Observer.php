@@ -9,9 +9,10 @@ interface Observer
     /**
      * Manages an event the instance is observing
      *
-     * @param ObservableEventSubject $events
+     * @param string $observable_event_class
+     * @param string $method
      * @return void
      */
-    public function observe(ObservableEventSubject $events);
+    public function observe(string $observable_event_class, string $method);
 
 }

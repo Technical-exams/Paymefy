@@ -1,8 +1,7 @@
 <?php namespace Proweb21\Elevator\Model;
 
-use Proweb21\Elevator\Domain\DomainEventPublisher;
+use Proweb21\Elevator\Domain\ObserverTrait;
 use Proweb21\Elevator\Events\Observer;
-use Proweb21\Elevator\Events\ObservableEventSubject;
 use Proweb21\Elevator\Model\ElevatorsStateFactory as StateFactory;
 
 /**
@@ -12,7 +11,9 @@ use Proweb21\Elevator\Model\ElevatorsStateFactory as StateFactory;
 class ElevatorsStateService
     implements Observer
 {
-    
+
+    use ObserverTrait;
+
     /**
      * The Building Elevators state
      *
@@ -28,20 +29,7 @@ class ElevatorsStateService
     protected $building;
 
 
-    /**
-     * Observes for ElevatorFlatChanged Domain Events
-     * 
-     * Required by the Observer interface
-     *
-     * @param ObservableEventSubject $events
-     * @return void
-     */
-    public function observe(ObservableEventSubject $events)
-    {
-        $events->attachObserver($this,'updateState',ElevatorFlatChanged::class);
-    }
-
-
+    
     /**
      * Service constructor
      *
@@ -52,9 +40,8 @@ class ElevatorsStateService
     {
         $this->building = $building;
         $this->state = StateFactory::create($building);
-
-        // publish current state of elevators
-        $this->observe(DomainEventPublisher::instance());        
+    
+        $this->observe(ElevatorFlatChanged::class, 'updateState');
     }
 
 
