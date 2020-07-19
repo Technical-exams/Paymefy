@@ -6,7 +6,7 @@
  * An state is the location of the Elevators in the Building flats
  * 
  */
-final class BuildingElevatorsState
+final class ElevatorsState
 {
     /**
      * Internal state of the Elevators in a Building
