@@ -88,8 +88,7 @@ final class ElevatorsState
         $result = [];
 
         if (array_key_exists($flat,$this->state))
-            foreach($this->state[$flat] as $key => $id)
-                $result[] = ["flat"=>$flat, "order"=>$key, "elevator"=>$id];
+            $result = $this->state[$flat];               
 
         return $result;
     }
