@@ -1,6 +1,6 @@
 <?php namespace Proweb21\Elevator\Domain;
 
-use Proweb21\Elevator\Events\EventObserver;
+use Proweb21\Elevator\Events\Observer;
 use Proweb21\Elevator\Events\ObservableEvent;
 use Proweb21\Elevator\Events\ObservableEventSubject;
 
@@ -36,7 +36,7 @@ class DomainEventPublisher
     /**
      * {@inheritDoc}
      */
-    public function attachObserver(EventObserver $observer, string $method, string $observable_event_class)
+    public function attachObserver(Observer $observer, string $method, string $observable_event_class)
     {
         if (!array_key_exists($observable_event_class, $this->observers))
             $this->observers[$observable_event_class] = [];

@@ -11,12 +11,12 @@ interface ObservableEventSubject
     /**
      * Attaches an observer observing (or listening) a kind of observable events
      *
-     * @param EventObserver $observer An observer of observable events
+     * @param Observer $observer An observer of observable events
      * @param string $method Which method may be called in the observer
      * @param string $observable_event_class
      * @return void
      */
-    public function attachObserver(EventObserver $observer, string $method, string $observable_event_class);
+    public function attachObserver(Observer $observer, string $method, string $observable_event_class);
 
     /**
      * Notifies an ObservableEvent to all observers
