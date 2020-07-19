@@ -4,7 +4,7 @@
  * Interface for implementations of the observer in the Observer pattern
  * @see https://en.wikipedia.org/wiki/Observer_pattern
  */
-interface EventObserver
+interface Observer
 {
     /**
      * Manages an event the instance is observing
