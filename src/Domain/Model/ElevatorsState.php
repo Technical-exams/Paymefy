@@ -1,5 +1,8 @@
 <?php namespace Proweb21\Elevator\Model;
 
+use Proweb21\Elevator\Domain\ObservableTrait;
+use Proweb21\Elevator\Events\Observable;
+
 /**
  * Elevators' state in a building
  * 
@@ -7,7 +10,11 @@
  * 
  */
 final class ElevatorsState
+    implements Observable
 {
+
+    use ObservableTrait;
+
     /**
      * Internal state of the Elevators in a Building
      *
@@ -19,17 +26,19 @@ final class ElevatorsState
      * Sets the state for an elevator in a Building
      *
      * @param string $elevator id The elevator to state
-     * @return string The elevator id once stated
+     * @return void
      */
     public function setState(string $elevator, int $flat): string
     {
-        $elevator = $this->removeState($elevator);
+        $previous_state = $this->removeState($elevator);
 
         if (!array_key_exists($flat, $this->state))        
             $this->state[$flat] = [$elevator];
         else
             $this->state[$flat][]=$elevator;
-        
+
+        $this->publishStateChanged($elevator, $flat, $previous_state);
+
         return $elevator;
     }
 
@@ -38,9 +47,9 @@ final class ElevatorsState
      * Removes the state of an elevator in a Building
      *
      * @param string $elevator The elevator which state has to be removed
-     * @return string The elevator once its state is removed
+     * @return array|FALSE The former elevator state before being removed or FALSE if had no state
      */
-    public function removeState(string $elevator) : string
+    public function removeState(string $elevator)
     {
         $state = $this->getState($elevator);
         
@@ -50,7 +59,7 @@ final class ElevatorsState
             $this->state[$state["flat"]] = array_values($this->state[$state["flat"]]);
         }
 
-        return $elevator;
+        return $state;
     }
 
     /**
@@ -93,5 +102,24 @@ final class ElevatorsState
         return $result;
     }
 
+ 
+    /**
+     * Notifies observers a ElevatorsStateChanged domain event
+     *
+     * @param string $elevator The Elevator what caused the state change
+     * @param int $flat The new flat (position) where the elevator is located
+     * @param array|FALSE $previous_state The previous state for the Elevator
+     * @return void
+     */
+    protected function publishStateChanged(string $elevator, int $flat, $previous_state)
+    {        
+        $flats_moved = 0;
+
+        if ($previous_state)
+            $flats_moved = intval(abs($previous_state['flat']-$flat));
+
+        $this->publish(new ElevatorsStateChanged($flats_moved, $elevator, $flat, $this->state));
+    }
+    
 
 }
