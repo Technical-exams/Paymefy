@@ -44,7 +44,7 @@ class ChronoSimulator
         foreach($this->clock->minutes() as $clock_time){            
             $event = new MinutePassed($clock_time["hour"],$clock_time["minute"]);
             $this->bus->dispatch($event);
-            print(implode(':',$clock_time)."\n");
+            //print(implode(':',$clock_time)."\n");
         }
     }
 
