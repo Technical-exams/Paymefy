@@ -11,7 +11,7 @@ class ElevatorStatsRepository
     /**
      * How often stats are flushed to the store
      */
-    const FLUSH_FRECUENCY = 50;
+    const FLUSH_FRECUENCY = 100;
 
 
     /**
@@ -58,7 +58,7 @@ class ElevatorStatsRepository
         $this->collected_stats[] = $stats;
         $this->most_recent_stats[$stats->elevator] = $stats;
         
-        if (count($this->collected_stats >= self::FLUSH_FRECUENCY))
+        if (count($this->collected_stats) >= self::FLUSH_FRECUENCY)
             $this->flushCollectedStatsToStore();
     }
 
