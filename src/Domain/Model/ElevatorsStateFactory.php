@@ -20,7 +20,7 @@ abstract class ElevatorsStateFactory
 
         foreach($building->getElevators() as $elevator){
             $flat = array_search($elevator->flat,$building->getFlats());
-            $result->setState($elevator, $flat);
+            $result->setState($elevator->id, $flat);
         }
 
         return $result;
