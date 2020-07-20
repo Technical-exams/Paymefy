@@ -76,7 +76,7 @@ final class ElevatorsState
         $flat = 0;
 
         while ($flat<count($this->state) && !$result){
-            if (is_array($this->state[$flat]))
+            if (array_key_exists($flat,$this->state) && is_array($this->state[$flat]))
                 $key = array_search($elevator,$this->state[$flat]);
             if ($key !== false)
                 $result = ["flat"=>$flat,"order"=>$key,"elevator"=>$elevator];
@@ -97,7 +97,7 @@ final class ElevatorsState
         $result = [];
 
         if (array_key_exists($flat,$this->state))
-            $result = $this->state[$flat];               
+            $result = (array)($this->state[$flat]);
 
         return $result;
     }
