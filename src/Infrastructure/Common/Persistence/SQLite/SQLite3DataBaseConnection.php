@@ -52,6 +52,7 @@ final class SQLite3DataBaseConnection
 
         }catch(\ErrorException $error){
             $this->driver = null;
+            return;
         }
 
         if (! empty($this->password) ) {
@@ -66,6 +67,10 @@ final class SQLite3DataBaseConnection
                 );
             }
         }
+        // JOURNAL MODE IS SET TO WALL
+        // PLEASE READ https://www.sqlite.org/wal.html
+        $this->driver->exec('PRAGMA journal_mode = wal;');
+
     }
 
     public function connected(): bool
@@ -87,14 +92,36 @@ final class SQLite3DataBaseConnection
 
     public function query(string $query)
     {
-        if ($this->connected())
-            return $this->driver->query($query);
+        if (! $this->connected()) return FALSE;
+
+        set_error_handler(function ($severity, $message, $file, $line) {
+            throw new \ErrorException($message, $severity, $severity, $file, $line);
+        },\E_ERROR | E_WARNING | E_NOTICE);
+
+        try {
+            $result = $this->driver->query($query);;
+            return $result;
+        }finally{
+            restore_error_handler();
+        }
+            
     }
 
     public function execute(string $stmt)
     {
-        if ($this->connected())
-            return $this->driver->exec((string)$stmt);
+        if (! $this->connected()) return FALSE;
+
+        set_error_handler(function ($severity, $message, $file, $line) {
+            throw new \ErrorException($message, $severity, $severity, $file, $line);
+        },\E_ERROR | E_WARNING | E_NOTICE);
+
+        try {
+            $this->driver->exec($stmt);;
+            return true;
+        }finally{
+            restore_error_handler();
+        }
+            
     }
 
 }
