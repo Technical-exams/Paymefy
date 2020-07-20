@@ -79,11 +79,11 @@ class ElevatorsStateChangedService
      */
     protected function calculateAccumulated(string $elevator, int $new_movement): int
     {
-        $result = 0;
+        $result = $new_movement;
 
         $stats = $this->repository->last($elevator);
         if (!is_null($stats))
-            $result = $stats->total_moves;
+            $result += $stats->total_moves;
         
         return $result;
     }
