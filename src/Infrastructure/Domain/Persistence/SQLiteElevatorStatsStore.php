@@ -55,7 +55,7 @@ class SQLiteElevatorStatsStore
         $displacement = $stats->last_movement;
         $time = $stats->last_update->format(self::DATETIME_FORMAT);
 
-        return "(\"${time}\",\"${elevator}\",${flat},${accum},${displacement})";
+        return "(\"${time}\",\"${elevator}\",${flat},${accum},${displacement})\n";
     }
 
     /**
@@ -101,10 +101,7 @@ class SQLiteElevatorStatsStore
      */
     protected function toResult(\SQLite3Result $result): \Traversable
     {
-        $row = $result->fetchArray(\SQLITE3_ASSOC);
-
-        if ($row !== FALSE)
-
+        while ( FALSE !==  ($row = $result->fetchArray(\SQLITE3_ASSOC))) 
             yield $this->toSingleResult($row);
     }
 
@@ -119,7 +116,7 @@ class SQLiteElevatorStatsStore
      */
     protected function toSingleResult(array $row) : ElevatorStats
     {
-        $last_update = \DateTimeImmutable::createFromFormat($row['time'],self::DATETIME_FORMAT);
+        $last_update = \DateTimeImmutable::createFromFormat(self::DATETIME_FORMAT,$row['time']);
         // stopped_at is reused for flat id and flat position
         return new ElevatorStats($row['elevator'],$row['stopped_at'], 
                                  $row['stopped_at'],$row['last_move'], 
