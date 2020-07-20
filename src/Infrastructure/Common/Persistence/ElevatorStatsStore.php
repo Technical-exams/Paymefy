@@ -12,18 +12,18 @@ interface ElevatorStatsStore
      * Adds a new stats to the store
      *
      * @param ElevatorStats $stats
-     * @return void
+     * @return bool FALSE if error occurred, TRUE on success
      */
-    public function appendOne(ElevatorStats $stats);
+    public function appendOne(ElevatorStats $stats) : bool;
 
 
     /**
      * Adds several stats at once to the store
      *
      * @param array $queue_of_stats
-     * @return void
+     * @return bool FALSE if error occurred, TRUE on success
      */
-    public function appendMany(array $queue_of_stats);
+    public function appendMany(array $queue_of_stats) : bool;
 
     /**
      * Gets all stored stats 
