@@ -1,5 +1,7 @@
-<?php namespace Proweb21\Elevator\Events;
+<?php namespace Proweb21\Elevator\Events\Time;
 
+use Proweb21\Elevator\Events\Event;
+use Proweb21\Elevator\Events\EventTrait;
 
 final class MinutePassed
     implements Event
@@ -20,7 +22,7 @@ final class MinutePassed
     {
         $time = new \DateTime();
         $time->setTime($hour,$minute);
-        $this->time = \DateTimeImmutable::createFromMutable($time);
+        $this->setTime(\DateTimeImmutable::createFromMutable($time));
     }
 
     
