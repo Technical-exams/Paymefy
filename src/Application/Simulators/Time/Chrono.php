@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Simulator;
+<?php namespace Proweb21\Elevator\Application\Simulators\Time;
 
 /**
  * Chrono acts like a chronometer
