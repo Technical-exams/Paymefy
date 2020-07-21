@@ -1,6 +1,6 @@
-<?php namespace Proweb21\Elevator\Application;
+<?php namespace Proweb21\Elevator\Application\ElevatorCalls\Strategies;
 
-use Proweb21\Elevator\Model\ElevatorsState;
+// use Proweb21\Elevator\Model\ElevatorsState;
 
 class CloserElevatorStrategy
     implements ElevatorCalledStrategy

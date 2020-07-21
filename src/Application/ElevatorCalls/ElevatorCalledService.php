@@ -1,5 +1,6 @@
-<?php namespace Proweb21\Elevator\Application;
+<?php namespace Proweb21\Elevator\Application\ElevatorCalls;
 
+use Proweb21\Elevator\Application\ElevatorCalls\Strategies\ElevatorCalledStrategy;
 use Proweb21\Elevator\Events\EventHandler;
 use Proweb21\Elevator\Model\Building;
 use Proweb21\Elevator\Model\ElevatorsStateService as StateService;

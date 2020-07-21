@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Application;
+<?php namespace Proweb21\Elevator\Application\ElevatorCalls;
 
 /**
  * Factory for creating ElevatorCalled instances

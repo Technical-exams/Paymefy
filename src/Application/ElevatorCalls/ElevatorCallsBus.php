@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Application;
+<?php namespace Proweb21\Elevator\Application\ElevatorCalls;
 
 use Proweb21\Elevator\Events\EventBus;
 use Proweb21\Elevator\Events\EventDispatcherTrait;
