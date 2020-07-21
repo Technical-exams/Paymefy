@@ -47,5 +47,12 @@ trait SimulatorTrait
         $this->started = false;
     }
 
+    /** 
+     * Runs the simulation
+     */
+    protected function doRun()
+    {
+        throw new \RuntimeException("You must override `doRun` method from SimulatorTrait in the class using it");
+    }
 
 }
