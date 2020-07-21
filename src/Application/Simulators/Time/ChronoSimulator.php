@@ -34,7 +34,10 @@ class ChronoSimulator
     public function __construct(TimeBus $bus, int $count=null)
     {
         $this->bus = $bus;
-        $this->clock = new Chrono($count);
+        if (!is_null($count))
+            $this->clock = new Chrono($count);
+        else
+            $this->clock = new Chrono();
     }
 
     /**
@@ -47,7 +50,7 @@ class ChronoSimulator
      */
     public function setup(int $hour = null, int $minutes = null)
     {
-        if (!$this->started())
+        if ($this->started())
             throw new \RuntimeException("ChronoSimulator is started, cannot be set up");
 
         if (!is_null($hour) && (0<=$hour) && (23>=$hour))
