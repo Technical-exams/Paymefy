@@ -1,21 +1,24 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Simulator;
+<?php namespace Proweb21\Elevator\Application\Simulators\ElevatorCalls;
 
-use Proweb21\Elevator\Application\ElevatorCallFactory;
-use Proweb21\Elevator\Application\ElevatorCallsBus;
+use Proweb21\Elevator\Application\ElevatorCalls\ElevatorCallFactory;
+use Proweb21\Elevator\Application\ElevatorCalls\ElevatorCallsBus;
+use Proweb21\Elevator\Application\Simulators\Simulator;
 use Proweb21\Elevator\Events\EventHandler;
 use Proweb21\Elevator\Events\EventPublisher;
 use Proweb21\Elevator\Events\EventPublisherTrait;
-use Proweb21\Elevator\Events\MinutePassed;
+use Proweb21\Elevator\Events\Time\MinutePassed;
 
 /**
  * Simulates user calls to elevators
  */
-class ElevatorCallSimulator
+class ElevatorCallsSimulator
     implements EventHandler,
-               EventPublisher
+               EventPublisher,
+               Simulator
 {
 
     use EventPublisherTrait;
+
 
     /**
      * Bus for notifying any elevator call occurred
@@ -47,12 +50,12 @@ class ElevatorCallSimulator
      */
     protected $factory;
 
+
     /**
-     * On|off Flag for simulator 
+     * {@inheritDoc}
      *
-     * @var boolean
      */
-    protected $started = false;
+    protected $started=false;
 
     /**
      * Simulator constructor
@@ -80,37 +83,44 @@ class ElevatorCallSimulator
      * @return void
      */
     public function handle(MinutePassed $event){
+        if (!$this->started()) return;
 
         $minute = (int)($event->time->format('i'));
         if ((($minute + $this->offset) % $this->frequency) == 0) {
-            if ($this->started) {
-                $elevator_called = $this->factory->create($event->time);
-                $this->publish($elevator_called,$this->bus);
-            }
+     
+            $elevator_called = $this->factory->create($event->time);
+            $this->publish($elevator_called,$this->bus);
+    
         }
     }
 
-
     /**
-     * Starts the simulator
-     * In other words, the simulator is set ON
+     * {@inheritDoc}
      *
-     * @return void
-     */
+     */ 
     public function start()
     {
+        if ($this->started()) return;
         $this->started = true;
+
     }
 
     /**
-     * Starts the simulator
-     * In other words, the simulator is set ON
+     * {@inheritDoc}
      *
-     * @return void
+     */
+    public function started(): bool
+    {
+        return ($this->started);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      */
     public function stop()
     {
         $this->started = false;
     }
-    
+
 }

@@ -52,4 +52,19 @@ interface ElevatorStatsStore
      * @return \Traversable
      */
     public function retrieveSummary() : \Traversable;
+
+
+    /**
+     * Counts the stats in the store
+     *
+     * @return integer
+     */
+    public function count(): int;
+
+    /**
+     * Drops all the stats in the store
+     *
+     * @return void
+     */
+    public function removeAll();
 }

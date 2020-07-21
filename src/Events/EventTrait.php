@@ -1,5 +1,7 @@
 <?php namespace Proweb21\Elevator\Events;
 
+use Proweb21\Elevator\Events\Time\SystemTime;
+
 /**
  * Trait implementing the Event interface
  * @property-read \DateTimeImmutable $time
