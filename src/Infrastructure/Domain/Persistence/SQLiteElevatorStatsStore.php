@@ -231,4 +231,25 @@ class SQLiteElevatorStatsStore
 
         return $this->toResult($query_result);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     */    
+    public function count(): int{
+        $query = "SELECT COUNT(id) FROM `elevator_stats`";
+        $query_result = $this->conn->query($query);
+        $result = $query_result->fetchArray(\SQLITE3_NUM);
+        return (int)($result[0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     */    
+    public function removeAll()
+    {
+        $query = "DELETE FROM `elevator_stats`";
+        $this->conn->execute($query);
+    }
 }

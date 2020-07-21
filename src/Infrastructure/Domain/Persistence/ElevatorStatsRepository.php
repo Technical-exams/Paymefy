@@ -118,6 +118,19 @@ class ElevatorStatsRepository
         array_splice($this->collected_stats, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     */
+    public function count(): int
+    {
+        return $this->store->count() + count($this->collected_stats);
+    }
 
+    public function removeAll()
+    {
+        $this->collected_stats = [];
+        $this->store->removeAll();
+    }
 
 }
