@@ -3,7 +3,6 @@
 use Proweb21\Elevator\Application\ElevatorCalls\ElevatorCallFactory;
 use Proweb21\Elevator\Application\ElevatorCalls\ElevatorCallsBus;
 use Proweb21\Elevator\Application\Simulators\Simulator;
-use Proweb21\Elevator\Application\Simulators\SimulatorTrait;
 use Proweb21\Elevator\Events\EventHandler;
 use Proweb21\Elevator\Events\EventPublisher;
 use Proweb21\Elevator\Events\EventPublisherTrait;
@@ -20,7 +19,6 @@ class ElevatorCallsSimulator
 
     use EventPublisherTrait;
 
-    use SimulatorTrait;
 
     /**
      * Bus for notifying any elevator call occurred
@@ -52,6 +50,13 @@ class ElevatorCallsSimulator
      */
     protected $factory;
 
+
+    /**
+     * {@inheritDoc}
+     *
+     */
+    protected $started=false;
+
     /**
      * Simulator constructor
      *
@@ -78,15 +83,44 @@ class ElevatorCallsSimulator
      * @return void
      */
     public function handle(MinutePassed $event){
+        if (!$this->started()) return;
 
         $minute = (int)($event->time->format('i'));
         if ((($minute + $this->offset) % $this->frequency) == 0) {
-            if ($this->started()) {
-                $elevator_called = $this->factory->create($event->time);
-                $this->publish($elevator_called,$this->bus);
-            }
+     
+            $elevator_called = $this->factory->create($event->time);
+            $this->publish($elevator_called,$this->bus);
+    
         }
     }
 
-    
+    /**
+     * {@inheritDoc}
+     *
+     */ 
+    public function start()
+    {
+        if ($this->started()) return;
+        $this->started = true;
+
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     */
+    public function started(): bool
+    {
+        return ($this->started);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     */
+    public function stop()
+    {
+        $this->started = false;
+    }
+
 }
