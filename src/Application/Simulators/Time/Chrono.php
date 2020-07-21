@@ -35,7 +35,7 @@ class Chrono
     public function __construct(int $count = 60, int $hour=null)
     {
         $this->reset($hour);
-        $this->count = (!is_null($count) && (0<$count && 60>=$count))?$count:$this->count;
+        $this->count = $count;
     }
 
     public function reset(int $hour=null, int $minutes=0){
@@ -49,8 +49,6 @@ class Chrono
         $count = 0;
         // We must chrono minutes while count is reached.
         while ($count < $this->count) {            
-            $count++;
-            $this->minutes++;
             // When minutes reach 60, minutes and hour are readjusted
             if ($this->minutes >= 60) {
                 $this->reset(
@@ -60,6 +58,9 @@ class Chrono
             }
             
             yield ["hour"=>$this->hour,"minute"=>$this->minutes];
+
+            $count++;
+            $this->minutes++;
         }        
     }
 
