@@ -1,4 +1,7 @@
-<?php namespace Proweb21\Elevator\Events;
+<?php namespace Proweb21\Elevator\Events\Time;
+
+use Proweb21\Elevator\Events\EventHandler;
+use Proweb21\Elevator\Events\MinutePassed;
 
 /**
  * Singleton class intended to provide the current application time

@@ -3,6 +3,7 @@
 use Proweb21\Elevator\Application\Simulators\Simulator;
 use Proweb21\Elevator\Application\Simulators\SimulatorTrait;
 use Proweb21\Elevator\Events\MinutePassed;
+use Proweb21\Elevator\Events\Time\TimeBus;
 
 /**
  * Simulates the pass of a given time expressed in minutes

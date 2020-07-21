@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Simulator;
+<?php namespace Proweb21\Elevator\Events\Time;
 
 use Proweb21\Elevator\Events\EventBus;
 use Proweb21\Elevator\Events\EventDispatcherTrait as EventsEventDispatcherTrait;
