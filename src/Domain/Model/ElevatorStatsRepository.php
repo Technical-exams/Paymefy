@@ -27,4 +27,15 @@ interface ElevatorStatsRepository
      * 
      */
     public function last(string $elevator): ?ElevatorStats;
+
+
+    /**
+     * Counts the stats in the repository
+     */
+    public function count(): int;
+
+    /** 
+     * Removes all stats in the repository
+     */
+    public function removeAll();
 }
