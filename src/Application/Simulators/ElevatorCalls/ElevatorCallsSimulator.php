@@ -7,7 +7,7 @@ use Proweb21\Elevator\Application\Simulators\SimulatorTrait;
 use Proweb21\Elevator\Events\EventHandler;
 use Proweb21\Elevator\Events\EventPublisher;
 use Proweb21\Elevator\Events\EventPublisherTrait;
-use Proweb21\Elevator\Events\MinutePassed;
+use Proweb21\Elevator\Events\Time\MinutePassed;
 
 /**
  * Simulates user calls to elevators
