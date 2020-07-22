@@ -13,12 +13,10 @@
             "email": "xavi@proweb21.com"
         }
     ],  
-    "minimum-stability": "dev",  
+    "minimum-stability": "stable",  
     "require": {
         "php": "^7.2.5",
         "ext-sqlite3": "*",
-        "vlucas/phpdotenv": "^5.1@dev",
-        "phpunit/phpunit": "^9.3@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
