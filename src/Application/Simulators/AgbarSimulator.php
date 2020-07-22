@@ -197,11 +197,20 @@ final class AgbarSimulator
         $this->start_time = $start_time;
     }
 
+    public function getStartTime(): \DateTimeImmutable
+    {
+        return $this->start_time;
+    }
+
     public function setEndTime(\DateTimeImmutable $end_time)
     {
         $this->end_time = $end_time;
     }
 
+    public function getEndTime(): \DateTimeImmutable
+    {
+        return $this->end_time;
+    }
 
     /**
      * Gets the Agbar Building Aggregate-Root Entity
