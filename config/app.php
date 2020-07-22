@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        App\Providers\SimulationProvider::class,
+
     ],
 
     /*
@@ -190,6 +192,7 @@ return [
 
     'aliases' => [
 
+        'AgbarSimulator' => App\Facades\AgbarSimulator::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
