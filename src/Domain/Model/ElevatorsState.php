@@ -54,9 +54,10 @@ final class ElevatorsState
         $state = $this->getState($elevator);
         
         if ($state) {
-            array_splice($this->state[$state["flat"]], $state["order"], 1);
+            $flat_state = $this->state[$state["flat"]];
+            array_splice($flat_state, $state["order"], 1);
             // Flat State is reindexed
-            $this->state[$state["flat"]] = array_values($this->state[$state["flat"]]);
+            $this->state[$state["flat"]] = array_values($flat_state);
         }
 
         return $state;
@@ -70,19 +71,16 @@ final class ElevatorsState
      */
     public function getState(string $elevator)
     {
-        
         $result = false;
         $key = false;
-        $flat = 0;
-
-        while ($flat<count($this->state) && !$result){
-            if (array_key_exists($flat,$this->state) && is_array($this->state[$flat]))
-                $key = array_search($elevator,$this->state[$flat]);
-            if ($key !== false)
+        foreach($this->state as $flat => $flat_state){
+            if (is_array($flat_state))
+                $key = array_search($elevator,$flat_state);
+            if ($key !== false) {
                 $result = ["flat"=>$flat,"order"=>$key,"elevator"=>$elevator];
-            $flat++;
+                break;
+            }
         }
-
         return $result;
     }
 
