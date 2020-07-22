@@ -76,6 +76,12 @@ final class SimulationProvider extends ServiceProvider
             return $result;
         });
 
+        $this->app->bind('stats.repository', function($app)
+        {
+            $store = $this->app->make('stats.store');
+            return new PersistenceElevatorStatsRepository($store);
+        });
+
     }
 
     /**
@@ -86,8 +92,7 @@ final class SimulationProvider extends ServiceProvider
     public function boot()
     {
         $building = $this->app->make('simulator')->getBuilding();
-        $store = $this->app->make('stats.store');
-        $repo = new PersistenceElevatorStatsRepository($store);
+        $repo = $this->app->make('stats.repository');        
         $this->stats_service = $stats_service = new ElevatorsStateChangedService($repo,$building);
     }
 }
