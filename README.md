@@ -20,6 +20,29 @@ The code faces the DDD paradigm applying well-known patterns and types, orchestr
 **_It's Hexagonal_**  
 The code modularizes the application in separate layers (Domain, Application and Infrastructure), placing the _Ports_ as interfaces in the Domain Layer and a few in the Infrastructure layer, and placing _Adapters_ as classes implementing those interfaces in the Infrastructure layer.
 
+## RESULTS
+This project simulates the elevator movements on a 4 flats building (0 to 3) having 3 elevators and the following statements for user calls:
+
+* Users call elevators every 5 minutes between 09:00 and 11:00 to go from flat 0 to flat 2 
+* Users call elevators every 5 minutes between 09:00 and 11:00 to go from flat 0 to flat 3 
+* Users call elevators every 10 minutes between 09:00 and 10:00 to go from flat 0 to flat 3 
+* Users call elevators every 20 minutes between 11:00 and 18:20 to go from flat 0 to flat 1 
+* Users call elevators every 20 minutes between 11:00 and 18:20 to go from flat 0 to flat 2 
+* Users call elevators every 20 minutes between 11:00 and 18:20 to go from flat 0 to flat 3 
+* Users call elevators every 4 minutes between 14:00 and 15:00 to go from flat 1 to flat 0 
+* Users call elevators every 4 minutes between 14:00 and 15:00 to go from flat 2 to flat 0 
+* Users call elevators every 4 minutes between 14:00 and 15:00 to go from flat 3 to flat 0 
+* Users call elevators every 7 minutes between 15:00 and 16:00 to go from flat 2 to flat 0 
+* Users call elevators every 7 minutes between 15:00 and 16:00 to go from flat 3 to flat 0 
+* Users call elevators every 7 minutes between 15:00 and 16:00 to go from flat 0 to flat 1 
+* Users call elevators every 7 minutes between 15:00 and 16:00 to go from flat 0 to flat 3 
+* Users call elevators every 3 minutes between 18:00 and 20:00 to go from flat 1 to flat 0 
+* Users call elevators every 3 minutes between 18:00 and 20:00 to go from flat 2 to flat 0 
+* Users call elevators every 3 minutes between 18:00 and 20:00 to go from flat 3 to flat 0 
+
+Once the simulation has been run, the stats are collected in the _database_ (see "INSTALLATION"), and a summary report can be acquired web page (see "RUNNING THE APP").
+
+
 ## INSTALLATION
 ### Requirements
 As expressed in the [`composer.json` file](https://github.com/ProWeb21/elevator/blob/master/composer.json), it is necessary to have following requirements installed:
@@ -72,7 +95,7 @@ As expressed in the [`composer.json` file](https://github.com/ProWeb21/elevator/
 
 ## RUNNING THE APP
 
-### v0.1 PHP UNIT RUNNABLE
+### v0.1 _PHPUNIT_ RUNNABLE
 At this release the app is run through [_phpunit_](https://phpunit.readthedocs.io/).  
 You may run the following command from within the `<destination>` folder:  
 ```
@@ -90,3 +113,19 @@ So, in the `elevator_stats` table you may find records with the following inform
 * `stopped_at`: Flat on the building were the elevator was stopped when the stats were taken
 * `last_move`: The number of flats the elevator tripped until arrive the flat it was stopped at
 * `accum_moves`: The number of flats tripped until that moment in time
+
+
+### v0.2 _LARAVEL_ SERVED
+At this other release the app is run through [_Laravel_'s _artisan_ command](https://laravel.com/docs/7.x/artisan).  
+In this case, you may run this other command from within the `<destination>` folder:  
+```
+php artisan serve
+```
+
+Command will notice you that:
+
+> Laravel development server started: http://127.0.0.1:8000
+
+So, you just may have to visit that link to see the summary of the simulation.
+
+Enjoy it!
