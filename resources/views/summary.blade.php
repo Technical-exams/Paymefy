@@ -24,8 +24,8 @@
                 height: 100vh;
             }
 
-            .flex-center {
-                align-items: center;
+            .flex-top {
+                align-items: top;
                 display: flex;
                 justify-content: center;
             }
@@ -41,7 +41,8 @@
             }
 
             .content {
-                text-align: center;
+                margin-right: 10vw;
+                margin-left: 10vw;                
             }
 
             .title {
@@ -61,39 +62,139 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .table, .table thead, .table tbody, .table tr{
+                display:block;
+                width:100%;
+            }
+            .table .row .col{
+                width: 20%;
+                text-align: center;
+            }
+            .table .row, .table tr.row{                
+                display: flex;                
+                justify-content: space-between;
+                align-items:stretch;
+            }
+
+            .table .row .index{
+                font-weight: 800;
+            }
+
+
+            .table .row .cell{
+                margin-top:0;
+                padding-top: 0;
+                line-height: 0.8;
+                font-size: 0.8rem;
+                display: flex;
+                flex-direction: column;
+                align-content: flex-start;
+            }
+            .table .row .cell li *{
+                margin: 1ex 0;
+            }
+            .table .row .cell span{
+                text-align: left;
+            }
+            
+            .table .row ul{
+                list-style: none;
+                margin: 1rex;
+                padding:0;
+                margin-block-start: 0;
+                margin-block-end: 0;
+            }
+            .table .row ul li{
+                border-radius: 6px 6px 10px 6px;
+                padding: 0.6ex;
+            }
+            @php 
+                $counter = 0;
+            @endphp
+
+            @foreach ($state as $key => $value)
+            .serial-{{ $key }} {
+                background-color: hsla( {{ 90*($counter+1) - 10*$counter + 70 }},15%,70%,0.7);
+            }
+            @php
+                $counter++;
+            @endphp
+            @endforeach
+            
+
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
+        <div class="flex-top position-ref full-height">           
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Elevators summary
                 </div>
+                <table class="table">
+                    <thead>
+                        <tr class="row">
+                            <th class="col index">Minute</th>
+                            @foreach (range(0,3) as $flat)
+                            <th class="col flat">Flat {{ $flat }}</th>    
+                            @endforeach
+                        </tr>
+                    </thead>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                {{-- Initialization of variables --}}
+                @php                    
+                    $hour = (int)$start->format('H');;
+                    $last_hour = (int)$end->format('H');                    
+                @endphp
+
+                @for (;$hour<$last_hour;$hour++) 
+                @php
+                    $str_hour = str_pad((string)$hour,2,0,\STR_PAD_LEFT);
+                @endphp
+                    @for ($minute = 0; $minute < 60; $minute++)                    
+                    <tr class="row" id="{{ $hour.'-'.$minute }}">
+                        {{-- States are updated from data --}}
+                        @php
+                            $str_min = str_pad((string)$minute,2,'0', \STR_PAD_LEFT);                            
+                            $updating_state = true;
+                            while ($data->valid() && $updating_state){                                
+                                $time = $data->current()->last_update;                               
+                                $updating_state = ((int)$time->format('H') == $hour) && ((int) $time->format('i') == $minute);
+                                if ($updating_state){
+                                    $state[$data->current()->elevator] = ['flat'=>$data->current()->flat_name, 
+                                                                       'accum'=>$data->current()->total_moves, 
+                                                                       'move'=>$data->current()->last_movement];
+                                    $data->next();
+                                }                            
+                            }
+                        @endphp
+
+
+                        <td class="col index">
+                            <h2 class="cell">
+                            {{ $str_hour.':'.$str_min.' h' }}
+                            </h2>
+                        </td>
+                        @foreach (range(0,3) as $flat)
+                        <td class="col">                            
+                            <ul class="cell">
+                            @foreach ($state as $elevator => $el_data)                                
+                            @if ($el_data['flat'] == $flat)
+                                <li class="serial-{{ $elevator }}">
+                                    <h4>{{ $elevator }}</h4>
+                                    <span>M: {{ $el_data['move'] }}</span>
+                                    <span>T: {{ $el_data['accum'] }}</span>                                                                            
+                                </li>                                                            
+                            @endif
+                            @endforeach                          
+                            </ul>  
+                        </td>
+                        @endforeach                        
+                        </div>
+                    </tr>
+                    @endfor
+                @endfor
+                </table>
             </div>
         </div>
     </body>
