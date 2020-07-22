@@ -17,7 +17,6 @@ use Proweb21\Elevator\Model\ElevatorsStateChangedService;
 use Proweb21\Elevator\Model\ElevatorStatsRepository;
 
 final class SimulationProvider extends ServiceProvider
-    implements DeferrableProvider
 {
 
     /**
@@ -72,7 +71,7 @@ final class SimulationProvider extends ServiceProvider
                
         $this->app->alias(AgbarSimulator::class, 'simulator');
         $this->app->singleton(AgbarSimulator::class, function($app){
-            $result = new AgbarSimulator();
+            $result = AgbarSimulator::instance();
             $result->setStrategy( $app->make('agbar.strategy'));
             return $result;
         });
@@ -86,7 +85,7 @@ final class SimulationProvider extends ServiceProvider
      */
     public function boot()
     {
-        $building = AgbarSimulator::getBuilding();
+        $building = $this->app->make('simulator')->getBuilding();
         $store = $this->app->make('stats.store');
         $repo = new PersistenceElevatorStatsRepository($store);
         $this->stats_service = $stats_service = new ElevatorsStateChangedService($repo,$building);
