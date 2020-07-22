@@ -37,7 +37,7 @@ final class SimulationProvider extends ServiceProvider
         // ELEVATOR DATABASE CONNECTION
         $this->app->alias(DataBaseConnection::class, 'database');
         $this->app->singleton( DataBaseConnection::class, function($app){            
-            $file = env('DB_FILE', base_path('database/building.dist.db'));
+            $file = base_path(env('DB_FILE', 'database/building.dist.db'));
             $password = env('DB_PASSWORD', '');
             return new SQLite3DataBaseConnection($file,$password);
         });
