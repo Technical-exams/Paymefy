@@ -9,8 +9,8 @@ use Proweb21\Elevator\Events\Observable;
  * Each elevator is identified by its id,
  * in this case their manufacturer serial number
  * 
- * @property string $id
- * @property int $flat
+ * @property-read string $id
+ * @property-read Flat $flat
  */
 final class Elevator
     implements Observable
@@ -21,7 +21,7 @@ final class Elevator
     /**
      * Flat where the elevator is stopped
      *
-     * @var int
+     * @var Flat
      */
     protected $flat;
 
@@ -36,11 +36,11 @@ final class Elevator
     /**
      * Constructor
      *
-     * @param integer $initial_flat
+     * @param Flat $initial_flat
      */
-    public function __construct(int $initial_flat)
+    public function __construct(Flat $current_flat)
     {
-        $this->setFlat($initial_flat);
+        $this->setFlat($current_flat);
         $this->serial_no = uniqid();
     }
 
@@ -53,9 +53,9 @@ final class Elevator
     public function __get(string $name)
     {
         if ("id" == $name)
-            return $this->getId();
+            return $this->id();
         elseif ("flat" == $name)
-            return $this->getFlat();
+            return $this->flat();
     }
 
     /**
@@ -65,7 +65,7 @@ final class Elevator
      *
      * @return string
      */
-    public function getId(): string
+    public function id(): string
     {
         return $this->serial_no;
     }
@@ -73,9 +73,9 @@ final class Elevator
     /**
      * Elevator $flat getter
      *
-     * @return integer
+     * @return Flat
      */
-    public function getFlat(): int
+    public function flat(): Flat
     {
         return $this->flat;
     }
@@ -83,10 +83,10 @@ final class Elevator
     /**
      * Elevator $flat setter
      *
-     * @param integer $flat
+     * @param Flat $flat
      * @return Elevator
      */
-    public function setFlat(int $flat): Elevator
+    public function setFlat(Flat $flat): Elevator
     {
         $previous_flat = $this->flat;
         $this->flat = $flat;
@@ -96,13 +96,16 @@ final class Elevator
     }
 
     /**
-     * Notifies observers a ElevatorFlatChanged domain event
+     * Notifies observers an ElevatorFlatChanged domain event
      *
-     * @param int $previous_flat
+     * @param Flat $previous_flat
      * @return void
      */
     protected function publishFlatChanged($previous_flat){
-        $this->publish(new ElevatorFlatChanged($this->id,$previous_flat,$this->flat) 
+        $this->publish( 
+            new ElevatorFlatChanged($this->id,
+                                    $previous_flat->position, 
+                                    $this->current_flat->position) 
         );
     }
 
