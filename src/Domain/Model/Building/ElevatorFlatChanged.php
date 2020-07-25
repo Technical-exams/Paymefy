@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model;
+<?php namespace Proweb21\Elevator\Model\Building;
 
 use Proweb21\Elevator\Events\EventTrait;
 use Proweb21\Elevator\Events\ObservableEvent;
