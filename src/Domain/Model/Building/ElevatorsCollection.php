@@ -3,7 +3,7 @@
 /**
  * Collection of Elevators 
  */
-final class ElevatorCollection
+final class ElevatorsCollection
     implements \IteratorAggregate
     
 {
