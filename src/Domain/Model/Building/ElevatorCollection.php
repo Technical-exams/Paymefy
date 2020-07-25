@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model;
+<?php namespace Proweb21\Elevator\Model\Building;
 
 /**
  * Collection of Elevators 
