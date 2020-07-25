@@ -22,16 +22,16 @@ final class ElevatorFlatChanged
     /**
      * Identifier of the Elevator 
      *
-     * @var string
+     * @var Elevator
      */
-    public $elevator_id;
+    protected $elevator;
 
     /**
      * Current flat id
      *
      * @var int
      */
-    public $current_flat;
+    protected $current_flat;
 
 
     /**
@@ -39,7 +39,7 @@ final class ElevatorFlatChanged
      *
      * @var int
      */
-    public $previous_flat;
+    protected $previous_flat;
 
 
     /**
@@ -57,4 +57,36 @@ final class ElevatorFlatChanged
         // Time is set to current SystemTime via EventTrait
         $this->setTime();
     }
+
+    /**
+     * Getter for $elevator
+     *
+     * @return Elevator
+     */
+    public function elevator(): Elevator
+    {
+        return $this->elevator;
+    }
+
+    /**
+     * Getter for $current_flat
+     *
+     * @return integer
+     */
+    public function current_flat(): int
+    {
+        return $this->current_flat;
+    }
+
+    /**
+     * Getter for $previous_flat
+     *
+     * @return integer
+     */
+    public function previous_flat(): int
+    {
+        return $this->previous_flat;
+    }
+
+
 }
