@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model;
+<?php namespace Proweb21\Elevator\Model\Building;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
@@ -9,7 +9,7 @@ final class Building
     /**
      * Elevators of the building
      *
-     * @var ElevatorCollection
+     * @var ElevatorsCollection
      */
     protected $elevators;
 
@@ -34,7 +34,7 @@ final class Building
         // If flats are unordered we must order them 
         sort($flats); // flats are suposed to be integer numbers
         $this->flats = $flats;
-        $this->elevators = new ElevatorCollection;
+        $this->elevators = new ElevatorsCollection;
     }
 
     /**
@@ -50,9 +50,9 @@ final class Building
     /**
      * Building $elevators getter
      *
-     * @return ElevatorCollection The elevators of the building with their state
+     * @return ElevatorsCollection.php The elevators of the building with their state
      */
-    public function getElevators(): ElevatorCollection
+    public function getElevators(): ElevatorsCollection
     {
         return $this->elevators;
     }
