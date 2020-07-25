@@ -21,28 +21,28 @@ final class BuildingStateChanged
      *
      * @var int
      */
-    public $flats_moved;
+    protected $flats_moved;
 
     /**
      * Which elevator has changed its state
      *
      * @var string
      */
-    public $elevator_moved;
+    protected $elevator_moved;
 
     /**
      * Current elevators State, flat by flat
      *
      * @var array
      */
-    public $current_state;
+    protected $current_state;
 
     /**
      * Current flat for the moved Elevator
      *
      * @var int
      */
-    public $elevator_flat;
+    protected $elevator_flat;
 
 
 
@@ -63,4 +63,20 @@ final class BuildingStateChanged
         $this->elevator_flat = $elevator_flat;
         $this->setTime();
     }
+
+    public function flats_moved(): int
+    {
+        return $this->flats_moved;
+    }
+
+    public function elevator_flat(): int
+    {
+        return $this->elevator_flat;
+    }
+
+    public function elevator_moved() : string
+    {
+        return $this->elevator_moved;
+    }
+    
 }
