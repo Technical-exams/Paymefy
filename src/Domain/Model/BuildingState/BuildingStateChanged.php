@@ -6,7 +6,7 @@ use Proweb21\Elevator\Events\EventTrait;
 /**
  * Domain Event indicating the Building elevators state has changed
  */
-final class ElevatorsStateChanged
+final class BuildingStateChanged
     implements ObservableEvent
 {
 
