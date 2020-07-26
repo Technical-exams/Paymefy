@@ -1,11 +1,17 @@
 <?php namespace Proweb21\Elevator\Model\Building;
 
+use Proweb21\Elevator\Domain\ObservableTrait;
+use Proweb21\Elevator\Events\Observable;
+use Proweb21\Elevator\Domain\Events\ElevatorCreated;
+
 /**
  * Aggregate Root Entity for a Building with Elevators
  * It tricks its internal Elevators Aggregate using an
  */
-final class Building
+final class Building implements Observable
 {
+    use ObservableTrait;
+
     /**
      * Elevators of the building
      *
@@ -81,6 +87,9 @@ final class Building
      *
      * @param Flat $flat
      * @return Elevator The elevator created
+     *
+     * @throws \AssertionError If flat do not exist in the building
+     *
      */
     public function createElevator(Flat $flat = null)
     {
@@ -90,8 +99,24 @@ final class Building
         $elevator = new Elevator($flat);
         $this->elevators->add($elevator);
 
+        $this->publishElevatorCreated($elevator);
+
         return $elevator;
     }
+
+    /**
+     * Notifies observers an ElevatorCreated domain event
+     *
+     * @param Elevator $elevator
+     * @return void
+     */
+    protected function publishElevatorCreated(Elevator $elevator)
+    {
+        $this->publish(
+            new ElevatorCreated($elevator->id, $elevator->flat->position)
+        );
+    }
+
 
     /**
      * Moves an Elevator in the Building
