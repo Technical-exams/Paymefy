@@ -79,10 +79,10 @@ final class Building
     /**
      * Adds a new Elevator to Building
      *
-     * @param int $flat
+     * @param Flat $flat
      * @return Elevator The elevator created
      */
-    public function createElevator(int $flat = null)
+    public function createElevator(Flat $flat = null)
     {
         $flat = is_null($flat) ? reset($this->flats) : $flat;
         $this->validateFlat($flat);
