@@ -5,10 +5,10 @@ use Proweb21\Elevator\Events\Observer;
 use Proweb21\Elevator\Model\ElevatorsStateFactory as StateFactory;
 
 /**
- * Service responsaible of maintaining
- * the state of building elevators
+ * Service responsible of stating elevators in a building
+ * 
  */
-class ElevatorsStateService
+class StateElevatorsService
     implements Observer
 {
 
