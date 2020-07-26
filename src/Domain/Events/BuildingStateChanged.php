@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\Building;
+<?php namespace Proweb21\Elevator\Domain\Events;
 
 use Proweb21\Elevator\Events\ObservableEvent;
 use Proweb21\Elevator\Events\EventTrait;
@@ -6,8 +6,7 @@ use Proweb21\Elevator\Events\EventTrait;
 /**
  * Domain Event indicating the Building elevators state has changed
  */
-final class BuildingStateChanged
-    implements ObservableEvent
+final class BuildingStateChanged implements ObservableEvent
 {
 
     /**
@@ -48,7 +47,7 @@ final class BuildingStateChanged
 
     /**
      * Constructor
-     * 
+     *
      * Creates an ElevatorsStateChanged Event instance
      *
      * @param integer $flats_moved
@@ -59,7 +58,7 @@ final class BuildingStateChanged
     {
         $this->flats_moved = $flats_moved;
         $this->elevator_moved = $elevator_moved;
-        $this->current_state = $current_state;        
+        $this->current_state = $current_state;
         $this->elevator_flat = $elevator_flat;
         $this->setTime();
     }
@@ -78,5 +77,4 @@ final class BuildingStateChanged
     {
         return $this->elevator_moved;
     }
-    
 }
