@@ -99,6 +99,9 @@ final class Building
      * @param Elevator $elevator
      * @param Flat $to_flat
      * @return Elevator The $elevator moved
+     *
+     * @throws \AssertionError If elevator or flat do not exist in the building
+     *
      */
     public function moveElevator(Elevator $elevator, Flat $to_flat)
     {
@@ -114,12 +117,12 @@ final class Building
     /**
      * Checks if a given flat exists in the building
      *
-     * @param integer $flat
-     * @return true if flat exists
+     * @param Flat $flat
+     * @return true if flat belongs to Building
      */
-    protected function validateFlat(int $flat)
+    protected function validateFlat(Flat $flat)
     {
-        if (!in_array($flat, $this->flats)) {
+        if ((!in_array($flat, $this->flats)) || ($flat->building !== $this)) {
             throw new \AssertionError("Unexisting flat in this building");
         }
         return true;
