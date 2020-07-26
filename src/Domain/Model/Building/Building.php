@@ -124,4 +124,19 @@ final class Building
         }
         return true;
     }
+
+    /**
+     * Checks if a given elevator exists in the building
+     *
+     * @param Elevator $elevator
+     * @return true if elevator exists in the Building
+     */
+    protected function validateElevator(Elevator $elevator) : bool
+    {
+        $found = $this->elevators->findOne($elevator->id);
+        if (false === $found) {
+            throw new \AssertionError("Unexisting elevator in this building");
+        }
+        return true;
+    }
 }
