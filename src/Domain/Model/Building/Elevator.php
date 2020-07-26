@@ -1,22 +1,16 @@
 <?php namespace Proweb21\Elevator\Model\Building;
 
-use Proweb21\Elevator\Domain\ObservableTrait;
-use Proweb21\Elevator\Events\Observable;
-
 /**
  * Elevator is an Entity gathering a flat
- * 
+ *
  * Each elevator is identified by its id,
  * in this case their manufacturer serial number
- * 
+ *
  * @property-read string $id
  * @property-read Flat $flat
  */
 final class Elevator
-    implements Observable
 {
-
-    use ObservableTrait;
 
     /**
      * Flat where the elevator is stopped
@@ -52,20 +46,21 @@ final class Elevator
      */
     public function __get(string $name)
     {
-        if ("id" == $name)
-            return $this->id();
-        elseif ("flat" == $name)
-            return $this->flat();
+        if ("id" == $name) {
+            return $this->getId();
+        } elseif ("flat" == $name) {
+            return $this->getFlat();
+        }
     }
 
     /**
      * Elevator identifier getter
-     * 
+     *
      * This should be the manufacturer serial number
      *
      * @return string
      */
-    public function id(): string
+    public function getId(): string
     {
         return $this->serial_no;
     }
@@ -75,7 +70,7 @@ final class Elevator
      *
      * @return Flat
      */
-    public function flat(): Flat
+    public function getFlat(): Flat
     {
         return $this->flat;
     }
@@ -85,28 +80,15 @@ final class Elevator
      *
      * @param Flat $flat
      * @return Elevator
+     *
+     * @throws \AssertionError if the flat is not in the same building
      */
     public function setFlat(Flat $flat): Elevator
     {
-        $previous_flat = $this->flat;
+        if ($this->flat->building !== $flat->building) {
+            throw new \AssertionError("This flat is not in the building");
+        }
         $this->flat = $flat;
-        if (!is_null($previous_flat) && ($previous_flat !== $flat))
-            $this->publishFlatChanged($previous_flat);
         return $this;
     }
-
-    /**
-     * Notifies observers an ElevatorFlatChanged domain event
-     *
-     * @param Flat $previous_flat
-     * @return void
-     */
-    protected function publishFlatChanged($previous_flat){
-        $this->publish( 
-            new ElevatorFlatChanged($this->id,
-                                    $previous_flat->position, 
-                                    $this->current_flat->position) 
-        );
-    }
-
 }

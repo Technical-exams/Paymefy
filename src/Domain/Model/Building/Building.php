@@ -3,6 +3,7 @@
 use Proweb21\Elevator\Domain\ObservableTrait;
 use Proweb21\Elevator\Events\Observable;
 use Proweb21\Elevator\Domain\Events\ElevatorCreated;
+use Proweb21\Elevator\Domain\Events\ElevatorHasMoved;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
@@ -126,17 +127,38 @@ final class Building implements Observable
      * @return Elevator The $elevator moved
      *
      * @throws \AssertionError If elevator or flat do not exist in the building
-     *
+     * @throws \AssertionError If elevator is already in the given flat
      */
     public function moveElevator(Elevator $elevator, Flat $to_flat)
     {
         $this->validateFlat($to_flat);
         $this->validateElevator($elevator);
 
+        $previous_flat = $elevator->flat;
+        if ($previous_flat->position === $elevator->flat->position){
+            throw new \AssertionError("Cannot move an elevator which is already in the destination flat");
+        }
         $elevator->setFlat($to_flat);
-            
+
+        $this->publishElevatorHasMoved($elevator, $previous_flat);
+
         return $elevator;
     }
+
+    /**
+     * Notifies observers an ElevatorHasMoved domain event
+     *
+     * @param Elevator $elevator
+     * @param Flat $previous_flat
+     * @return void
+     */
+    protected function publishElevatorHasMoved(Elevator $elevator, Flat $previous_flat)
+    {
+        $this->publish(
+            new ElevatorHasMoved($elevator->id, $previous_flat->position, $elevator->flat->position)
+        );
+    }
+
 
 
     /**
