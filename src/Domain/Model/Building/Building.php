@@ -96,21 +96,16 @@ final class Building
     /**
      * Moves an Elevator in the Building
      *
-     * @param string $elevator_id
-     * @param integer $to_flat
+     * @param Elevator $elevator
+     * @param Flat $to_flat
      * @return Elevator The $elevator moved
      */
-    public function moveElevator(string $elevator_id, int $to_flat)
+    public function moveElevator(Elevator $elevator, Flat $to_flat)
     {
         $this->validateFlat($to_flat);
+        $this->validateElevator($elevator);
 
-        $elevator = $this->elevators->findOne($elevator_id);
-
-        if ($elevator) {
-            $elevator->setFlat($to_flat);
-        } else {
-            throw new \RuntimeException("Asked to move invalid elevator ${elevator_id}");
-        }
+        $elevator->setFlat($to_flat);
             
         return $elevator;
     }
