@@ -2,7 +2,7 @@
 
 /**
  * Aggregate Root Entity for a Building with Elevators
- * It tricks its internal Elevators Aggregate using an 
+ * It tricks its internal Elevators Aggregate using an
  */
 final class Building
 {
@@ -18,23 +18,41 @@ final class Building
      *
      * @var array
      */
-    protected $flats;
+    protected $flats = [];
 
 
     /**
      * Building constructor
-     * 
+     *
      * Initializes a building with its elevators
      *
-     * @param array[int] $flats an array with flats where elevators stop, having flat number|id as value
+     * @param string[] $flats an ascending ordered array with names of building's flats
      * @param integer $elevator_count
      */
     public function __construct(array $flats)
     {
-        // If flats are unordered we must order them 
-        sort($flats); // flats are suposed to be integer numbers
-        $this->flats = $flats;
+        foreach ($flats as $flat_name) {
+            $this->createFlat($flat_name);
+        }
         $this->elevators = new ElevatorsCollection;
+    }
+
+
+    /**
+     * Creates a new Flat in the Building
+     *
+     * @param string $name
+     * @param integer $position
+     * @return Flat
+     */
+    public function createFlat(string $name, int $position = null) : Flat
+    {
+        if (is_null($position)) {
+            $position = count($this->flats);
+        }
+        $this->flats[$position] = new Flat($name, $position, $this);
+
+        return $this->flats[$position];
     }
 
     /**
@@ -64,12 +82,12 @@ final class Building
      * @param int $flat
      * @return Elevator The elevator created
      */
-    public function createElevator(int $flat = null)    
+    public function createElevator(int $flat = null)
     {
         $flat = is_null($flat) ? reset($this->flats) : $flat;
         $this->validateFlat($flat);
 
-        $elevator = new Elevator($flat);        
+        $elevator = new Elevator($flat);
         $this->elevators->add($elevator);
 
         return $elevator;
@@ -88,10 +106,11 @@ final class Building
 
         $elevator = $this->elevators->findOne($elevator_id);
 
-        if ($elevator)
+        if ($elevator) {
             $elevator->setFlat($to_flat);
-        else
+        } else {
             throw new \RuntimeException("Asked to move invalid elevator ${elevator_id}");
+        }
             
         return $elevator;
     }
@@ -105,9 +124,9 @@ final class Building
      */
     protected function validateFlat(int $flat)
     {
-        if (!in_array($flat,$this->flats))
+        if (!in_array($flat, $this->flats)) {
             throw new \AssertionError("Unexisting flat in this building");
+        }
         return true;
     }
-
 }
