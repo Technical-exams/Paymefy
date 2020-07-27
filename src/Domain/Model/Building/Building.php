@@ -138,7 +138,7 @@ final class Building implements Observable
         if ($previous_flat->position === $elevator->flat->position){
             throw new \AssertionError("Cannot move an elevator which is already in the destination flat");
         }
-        $elevator->setFlat($to_flat);
+        $elevator->move($to_flat);
 
         $this->publishElevatorHasMoved($elevator, $previous_flat);
 

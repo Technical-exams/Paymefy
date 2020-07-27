@@ -34,7 +34,7 @@ final class Elevator
      */
     public function __construct(Flat $current_flat)
     {
-        $this->setFlat($current_flat);
+        $this->move($current_flat);
         $this->serial_no = uniqid();
     }
 
@@ -83,12 +83,13 @@ final class Elevator
      *
      * @throws \AssertionError if the flat is not in the same building
      */
-    public function setFlat(Flat $flat): Elevator
+    public function move(Flat $to_flat): Elevator
     {
-        if ($this->flat->building !== $flat->building) {
+
+        if (!is_null($this->flat) && $this->flat->building !== $to_flat->building) {
             throw new \AssertionError("This flat is not in the building");
         }
-        $this->flat = $flat;
+        $this->flat = $to_flat;
         return $this;
     }
 }
