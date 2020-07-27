@@ -4,6 +4,7 @@ use Proweb21\Elevator\Domain\ObservableTrait;
 use Proweb21\Elevator\Events\Observable;
 use Proweb21\Elevator\Domain\Events\ElevatorCreated;
 use Proweb21\Elevator\Domain\Events\ElevatorHasMoved;
+use Proweb21\Elevator\Domain\Events\FlatCreated;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
@@ -71,8 +72,24 @@ final class Building implements Observable
         }
         $this->flats[$position] = new Flat($name, $position, $this);
 
+        $this->publishFlatCreated($this->flats[$position]);
+
         return $this->flats[$position];
     }
+
+    /**
+     * Notifies observers a FlatCreated domain event
+     *
+     * @param Flat $flat
+     * @return void
+     */
+    protected function publishFlatCreated(Flat $flat)
+    {
+        $this->publish(
+            new FlatCreated($flat->name, $flat->position, $this->name)
+        );
+    }
+
 
     /**
      * Building $flats getter
