@@ -10,7 +10,7 @@ use Proweb21\Elevator\Events\ObservableEvent;
  *
  * @property-read \DateTimeImmutable $time
  * @property-read string $elevator_id
- * @property-read int $current_flat
+ * @property-read string $building
  */
 final class ElevatorCreated implements ObservableEvent
 {
@@ -28,22 +28,22 @@ final class ElevatorCreated implements ObservableEvent
     protected $elevator_id;
 
     /**
-     * Current flat position
+     * Building's identifier
      *
-     * @var int
+     * @var string
      */
-    protected $current_flat;
+    protected $building;
 
     /**
      * Constructor
      *
      * @param string $elevator_id
-     * @param integer $current_flat
+     * @param string $building
      */
-    public function __construct(string $elevator_id, int $current_flat)
+    public function __construct(string $elevator_id, string $building)
     {
         $this->elevator_id = $elevator_id;
-        $this->current_flat = $current_flat;
+        $this->building = $building;
         // Time is set to current SystemTime via EventTrait
         $this->setTime();
     }
@@ -62,8 +62,8 @@ final class ElevatorCreated implements ObservableEvent
                 return $this->getTime();
             case 'elevator_id':
                 return $this->getElevatorId();
-            case 'current_flat':
-                return $this->getCurrentFlat();
+            case 'building':
+                return $this->getBuilding();
         }
     }
 
@@ -79,12 +79,12 @@ final class ElevatorCreated implements ObservableEvent
     }
 
     /**
-     * Getter for $current_flat
+     * Getter for $building
      *
-     * @return integer
+     * @return string
      */
-    public function getCurrentFlat(): int
+    public function getBuilding() : string
     {
-        return $this->current_flat;
+        return $this->building;
     }
 }

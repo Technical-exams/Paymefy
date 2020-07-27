@@ -176,7 +176,7 @@ final class Building implements Observable
     protected function publishElevatorCreated(Elevator $elevator)
     {
         $this->publish(
-            new ElevatorCreated($elevator->id, $elevator->flat->position)
+            new ElevatorCreated($elevator->id, $elevator->flat->position, $this->name)
         );
     }
 
