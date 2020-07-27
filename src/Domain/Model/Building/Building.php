@@ -7,11 +7,21 @@ use Proweb21\Elevator\Domain\Events\ElevatorHasMoved;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
- * It tricks its internal Elevators Aggregate using an
+ *
+ * @property-read string $name
+ * @property-read ElevatorsCollection $elevators
+ * @property-read Flat[] $flats
  */
 final class Building implements Observable
 {
     use ObservableTrait;
+
+    /**
+     * The Buildings name (identifier)
+     *
+     * @var string
+     */
+    protected $name;
 
     /**
      * Elevators of the building
@@ -33,11 +43,13 @@ final class Building implements Observable
      *
      * Initializes a building with its elevators
      *
+     * @param string $name The Building's identifier
      * @param string[] $flats an ascending ordered array with names of building's flats
      * @param integer $elevator_count
      */
-    public function __construct(array $flats)
+    public function __construct(string $name, array $flats)
     {
+        $this->name = $name;
         foreach ($flats as $flat_name) {
             $this->createFlat($flat_name);
         }
@@ -72,14 +84,47 @@ final class Building implements Observable
         return $this->flats;
     }
 
+
+    /**
+     * Read-only properties accessor
+     *
+     * @param string $property
+     * @return void
+     */
+    public function __get($property)
+    {
+        switch ($property) {
+            case "name":
+                return $this->getName();
+            break;
+            case "elevators":
+                return $this->getElevators();
+            break;
+            case "flats":
+                return $this->getFlats();
+            break;
+
+        }
+    }
+
     /**
      * Building $elevators getter
      *
-     * @return ElevatorsCollection.php The elevators of the building with their state
+     * @return ElevatorsCollection The elevators of the building with their state
      */
     public function getElevators(): ElevatorsCollection
     {
         return $this->elevators;
+    }
+
+    /**
+     * Building $name getter
+     *
+     * @return string
+     */
+    public function getName() : string
+    {
+        return $this->name;
     }
 
 
@@ -135,7 +180,7 @@ final class Building implements Observable
         $this->validateElevator($elevator);
 
         $previous_flat = $elevator->flat;
-        if ($previous_flat->position === $elevator->flat->position){
+        if ($previous_flat->position === $elevator->flat->position) {
             throw new \AssertionError("Cannot move an elevator which is already in the destination flat");
         }
         $elevator->move($to_flat);
