@@ -67,4 +67,21 @@ final class ElevatorsCollection
         return $result;
     }
 
+    /**
+     * Gets the first elevator in the collection
+     *
+     * @return Elevator|FALSE The first elevator or FALSE if collection is empty
+     */
+    public function first()
+    {
+        $result = false;
+
+        if (count($this->elevators))
+            $result = reset($this->elevators);
+        
+        return $result;
+    }
+
+
+
 }
