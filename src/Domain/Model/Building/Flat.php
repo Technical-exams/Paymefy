@@ -32,6 +32,19 @@ final class Flat
 
 
     /**
+     * Compares two flats
+     *
+     * @param Flat $flat
+     * @param Flat $compared_flat
+     * @return boolean TRUE if flats belong to same building and have the same position
+     */
+    public static function equals(Flat $flat, Flat $compared_flat) : bool
+    {
+        return ($flat->building === $compared_flat->building) && ($flat->position === $compared_flat->position);
+    }
+
+
+    /**
      * Constructor
      *
      * Creates a flat with a given name and position in the given building
