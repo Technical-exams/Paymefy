@@ -17,9 +17,9 @@ final class BuildingState implements Observable
     /**
      * Internal state of the Elevators in a Building
      *
-     * @var array
+     * @var FlatStateCollection
      */
-    protected $state = [];
+    protected $flats_state;
 
     /**
      * Building stated
@@ -40,6 +40,7 @@ final class BuildingState implements Observable
     public function __construct(Building $building)
     {
         $this->building = $building;
+        $this->flats_state = new FlatStateCollection($this->building);
     }
 
 
