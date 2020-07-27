@@ -5,14 +5,12 @@ use Proweb21\Elevator\Events\Observable;
 
 /**
  * Elevators' state in a building
- * 
+ *
  * An state is the location of the Elevators in the Building flats
- * 
+ *
  */
-final class ElevatorsState
-    implements Observable
+final class BuildingState implements Observable
 {
-
     use ObservableTrait;
 
     /**
@@ -32,10 +30,11 @@ final class ElevatorsState
     {
         $previous_state = $this->removeState($elevator);
 
-        if (!array_key_exists($flat, $this->state))        
+        if (!array_key_exists($flat, $this->state)) {
             $this->state[$flat] = [$elevator];
-        else
+        } else {
             $this->state[$flat][]=$elevator;
+        }
 
         $this->publishStateChanged($elevator, $flat, $previous_state);
 
@@ -64,7 +63,7 @@ final class ElevatorsState
     }
 
     /**
-     * Gets the state of an Elevator in a Building 
+     * Gets the state of an Elevator in a Building
      *
      * @param string $elevator
      * @return array|false the Elevator state or false if not stated in the building
@@ -73,9 +72,10 @@ final class ElevatorsState
     {
         $result = false;
         $key = false;
-        foreach($this->state as $flat => $flat_state){
-            if (is_array($flat_state))
-                $key = array_search($elevator,$flat_state);
+        foreach ($this->state as $flat => $flat_state) {
+            if (is_array($flat_state)) {
+                $key = array_search($elevator, $flat_state);
+            }
             if ($key !== false) {
                 $result = ["flat"=>$flat,"order"=>$key,"elevator"=>$elevator];
                 break;
@@ -94,8 +94,9 @@ final class ElevatorsState
     {
         $result = [];
 
-        if (array_key_exists($flat,$this->state))
+        if (array_key_exists($flat, $this->state)) {
             $result = (array)($this->state[$flat]);
+        }
 
         return $result;
     }
@@ -110,14 +111,13 @@ final class ElevatorsState
      * @return void
      */
     protected function publishStateChanged(string $elevator, int $flat, $previous_state)
-    {        
+    {
         $flats_moved = 0;
 
-        if ($previous_state)
+        if ($previous_state) {
             $flats_moved = intval(abs($previous_state['flat']-$flat));
+        }
 
         $this->publish(new ElevatorsStateChanged($flats_moved, $elevator, $flat, $this->state));
     }
-    
-
 }
