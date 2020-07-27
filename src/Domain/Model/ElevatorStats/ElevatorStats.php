@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model;
+<?php namespace Proweb21\Elevator\Model\ElevatorStats;
 
 /**
  * DTO for persisting Elevator Stats taken during application execution
@@ -59,9 +59,10 @@ final class ElevatorStats
         $this->last_update = $last_update;
     }
 
-    public function __get($property){
-        if (property_exists(get_class($this),$property))
+    public function __get($property)
+    {
+        if (property_exists(get_class($this), $property)) {
             return $this->{$property};
+        }
     }
-
 }
