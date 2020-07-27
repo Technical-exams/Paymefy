@@ -1,11 +1,9 @@
 <?php namespace Proweb21\Elevator\Model\Building;
 
 /**
- * Collection of Elevators 
+ * Collection of Elevators
  */
-final class ElevatorsCollection
-    implements \IteratorAggregate
-    
+final class ElevatorsCollection implements \IteratorAggregate, \Countable
 {
     /**
      * The list of elevators compounding the collection
@@ -13,6 +11,16 @@ final class ElevatorsCollection
      * @var array
      */
     protected $elevators = [];
+
+    /**
+     * Gets the count of elevators in the collection
+     *
+     * @return integer
+     */
+    public function count() : int
+    {
+        return count($this->elevators);
+    }
 
     /**
      * Required by the \IteratorAggregate interface
@@ -26,7 +34,7 @@ final class ElevatorsCollection
 
     /**
      * Stores an elevator to the collection if not present
-     * 
+     *
      * @param Elevator $elevator
      * @return Elevator The elevator added
      */
@@ -45,8 +53,9 @@ final class ElevatorsCollection
      */
     public function remove(Elevator $elevator) : Elevator
     {
-        if (array_key_exists($elevator->id,$this->elevators))
+        if (array_key_exists($elevator->id, $this->elevators)) {
             unset($this->elevators[$elevator->id]);
+        }
 
         return $elevator;
     }
@@ -58,11 +67,12 @@ final class ElevatorsCollection
      * @return Elevator|False The elevator with the given id or null if no elevator was found
      */
     public function findOne(string $id)
-    {        
+    {
         $result = false;
 
-        if (array_key_exists($id,$this->elevators))
+        if (array_key_exists($id, $this->elevators)) {
             $result = $this->elevators[$id];
+        }
 
         return $result;
     }
@@ -76,12 +86,10 @@ final class ElevatorsCollection
     {
         $result = false;
 
-        if (count($this->elevators))
+        if (count($this->elevators)) {
             $result = reset($this->elevators);
+        }
         
         return $result;
     }
-
-
-
 }
