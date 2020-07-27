@@ -2,6 +2,7 @@
 
 use Proweb21\Elevator\Domain\ObservableTrait;
 use Proweb21\Elevator\Events\Observable;
+use Proweb21\Elevator\Model\Building\Building;
 
 /**
  * Elevators' state in a building
@@ -19,6 +20,28 @@ final class BuildingState implements Observable
      * @var array
      */
     protected $state = [];
+
+    /**
+     * Building stated
+     *
+     * @var Building
+     */
+    protected $building;
+
+
+    /**
+     * Constructor
+     *
+     * Creates a "clean" (empty) instance of BuildingState
+     * with no Flats neither Elevators
+     * 
+     * @param Building $building
+     */
+    public function __construct(Building $building)
+    {
+        $this->building = $building;
+    }
+
 
     /**
      * Sets the state for an elevator in a Building
