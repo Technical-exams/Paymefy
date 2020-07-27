@@ -8,7 +8,7 @@
  * for attending an Elevator call
  *
  */
-interface ElevatorCalledStrategy
+interface ElevatorLookupStrategy
 {
   
     /**

@@ -2,7 +2,7 @@
 
 // use Proweb21\Elevator\Model\ElevatorsState;
 
-class CloserElevatorStrategy implements ElevatorCalledStrategy
+class CloserElevatorStrategy implements ElevatorLookupStrategy
 {
 
     /**
