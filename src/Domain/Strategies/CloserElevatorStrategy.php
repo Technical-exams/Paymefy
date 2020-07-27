@@ -1,46 +1,44 @@
-<?php namespace Proweb21\Elevator\Application\ElevatorCalls\Strategies;
+<?php namespace Proweb21\Elevator\Domain\Strategies;
 
 // use Proweb21\Elevator\Model\ElevatorsState;
 
-class CloserElevatorStrategy
-    implements ElevatorCalledStrategy
+class CloserElevatorStrategy implements ElevatorCalledStrategy
 {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      */
     public function getElevator(array $flats_state, int $calling_flat, int $destination_flat) : string
     {
-        $result = FALSE;
+        $result = false;
         
-        $calling_flat = $this->getCallingFlatPosition($calling_flat,$flats_state);
+        $calling_flat = $this->getCallingFlatPosition($calling_flat, $flats_state);
         // We must find the closer elevator to calling flat
         $upwards = $calling_flat+1;
         $ended_upwards = false;
-        $downwards = $calling_flat-1;      
+        $downwards = $calling_flat-1;
         $ended_downwards = false;
 
         // Look at the calling flat if there is an elevator, that is the candidate
-        if (count($flats_state[$calling_flat]->elevators))
+        if (count($flats_state[$calling_flat]->elevators)) {
             $result = reset($flats_state[$calling_flat]->elevators);
+        }
 
-        while (($result === FALSE) && (! ($ended_downwards && $ended_upwards))){
+        while (($result === false) && (! ($ended_downwards && $ended_upwards))) {
             // Upwards elevators have preference because of gravity and energy saving lower impact
             if ($upwards < count($flats_state)) {
                 $result = count($flats_state[$upwards]->elevators) ? reset($flats_state[$upwards]->elevators) : false;
                 $upwards++;
-            }else{
+            } else {
                 $ended_upwards = true;
-            }            
+            }
             if (($result === false) && ($downwards >=0)) {
                 $result = count($flats_state[$downwards]->elevators) ? reset($flats_state[$downwards]->elevators) : false;
                 $downwards--;
-            }else{
+            } else {
                 $ended_downwards = true;
             }
-
-            
         }
         return $result;
     }
@@ -52,16 +50,15 @@ class CloserElevatorStrategy
      * @param integer $flat_id The id of the Flat
      * @param FlatStateDTO[] $flats_state The building elevators state as an array of FlatStates
      * @return integer The flat position once found
-     * 
+     *
      * @throws \RuntimeException if flat is not found in the state
      */
-    protected function getCallingFlatPosition(int $flat_id, array $flats_state): int 
+    protected function getCallingFlatPosition(int $flat_id, array $flats_state): int
     {
         $result = null; // We want an exception to occur if flat is not found
 
-        foreach($flats_state as $flat => $flatState)
-        {
-            if ($flatState->id === $flat_id){
+        foreach ($flats_state as $flat => $flatState) {
+            if ($flatState->id === $flat_id) {
                 $result = $flat;
                 break;
             }

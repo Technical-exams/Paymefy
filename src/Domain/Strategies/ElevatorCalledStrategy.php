@@ -1,12 +1,12 @@
-<?php namespace Proweb21\Elevator\Application\ElevatorCalls\Strategies;
+<?php namespace Proweb21\Elevator\Domain\Strategies;
 
 /**
  * Interface for ElevatorCalledStrategy classes
- * 
- * An ElevatorCalledStrategy is an algorithm with 
- * the logic behind the selection of an Elevator candidate 
+ *
+ * An ElevatorCalledStrategy is an algorithm with
+ * the logic behind the selection of an Elevator candidate
  * for attending an Elevator call
- * 
+ *
  */
 interface ElevatorCalledStrategy
 {
