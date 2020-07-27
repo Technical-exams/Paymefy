@@ -3,6 +3,7 @@
 use Proweb21\Elevator\Domain\ObservableTrait;
 use Proweb21\Elevator\Events\Observable;
 use Proweb21\Elevator\Model\Building\Building;
+use Proweb21\Elevator\Model\Building\Flat;
 
 /**
  * Elevators' state in a building
@@ -43,6 +44,25 @@ final class BuildingState implements Observable
         $this->flats_state = new FlatStateCollection($this->building);
     }
 
+
+    /**
+     * States a Flat
+     *
+     * @param Flat $flat
+     * @return $flat The flat once stated
+     * 
+     * @throws \AssertionError if $flat does not belong 
+     */
+    public function stateFlat(Flat $flat)
+    {
+        if ($flat->building !== $this->building){
+            throw new \AssertionError("Cannot state a Flat of a diferent Building");
+        }
+        
+        if ( ! isset($this->flats_state[$flat]) )
+            $this->flats_state[$flat] = new FlatState($flat);
+        return $flat;
+    }
 
     /**
      * Sets the state for an elevator in a Building
