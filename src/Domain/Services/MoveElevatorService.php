@@ -1,4 +1,8 @@
-<?php namespace Proweb21\Elevator\Model\Building;
+<?php namespace Proweb21\Elevator\Domain\Services;
+
+use Proweb21\Elevator\Model\Building\Building;
+use Proweb21\Elevator\Model\Building\Elevator;
+use Proweb21\Elevator\Model\Building\Flat;
 
 /**
  * Service responsible of moving elevators in a building
