@@ -97,7 +97,7 @@ final class Building implements Observable
         $flat = is_null($flat) ? reset($this->flats) : $flat;
         $this->validateFlat($flat);
 
-        $elevator = new Elevator($flat);
+        $elevator = new Elevator($flat, $this);
         $this->elevators->add($elevator);
 
         $this->publishElevatorCreated($elevator);

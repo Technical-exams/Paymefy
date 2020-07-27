@@ -13,6 +13,13 @@ final class Elevator
 {
 
     /**
+     * Building where the elevator is located
+     *
+     * @var Building
+     */
+    protected $building;
+
+    /**
      * Flat where the elevator is stopped
      *
      * @var Flat
@@ -32,8 +39,9 @@ final class Elevator
      *
      * @param Flat $initial_flat
      */
-    public function __construct(Flat $current_flat)
+    public function __construct(Flat $current_flat, Building $building)
     {
+        $this->building = $building;
         $this->move($current_flat);
         $this->serial_no = uniqid();
     }
@@ -50,6 +58,8 @@ final class Elevator
             return $this->getId();
         } elseif ("flat" == $name) {
             return $this->getFlat();
+        } elseif ("building" == $name) {
+            return $this->getBuilding();
         }
     }
 
@@ -75,6 +85,11 @@ final class Elevator
         return $this->flat;
     }
 
+    public function getBuilding() : Building
+    {
+        return $this->building;
+    }
+
     /**
      * Elevator $flat setter
      *
@@ -86,7 +101,7 @@ final class Elevator
     public function move(Flat $to_flat): Elevator
     {
 
-        if (!is_null($this->flat) && $this->flat->building !== $to_flat->building) {
+        if (!is_null($this->flat) && $this->building !== $to_flat->building) {
             throw new \AssertionError("This flat is not in the building");
         }
         $this->flat = $to_flat;
