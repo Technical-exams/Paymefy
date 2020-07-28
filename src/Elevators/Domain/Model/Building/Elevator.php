@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\Building;
+<?php namespace Proweb21\Elevators\Model\Building;
 
 /**
  * Elevator is an Entity gathering a flat
@@ -100,7 +100,6 @@ final class Elevator
      */
     public function move(Flat $to_flat): Elevator
     {
-
         if (!is_null($this->flat) && $this->building !== $to_flat->building) {
             throw new \AssertionError("This flat is not in the building");
         }

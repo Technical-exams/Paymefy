@@ -1,7 +1,7 @@
-<?php namespace Proweb21\Elevator\Domain\Events;
+<?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Events\EventTrait;
-use Proweb21\Elevator\Events\ObservableEvent;
+use Proweb21\EventTrait;
+use Proweb21\ObservableEvent;
 
 /**
  * FlatCreated Domain Event
@@ -13,7 +13,7 @@ use Proweb21\Elevator\Events\ObservableEvent;
  * @property-read int $position
  * @property-read string $building
  */
-final class FlatCreated implements ObservableEvent
+final class FlatWasCreated implements ObservableEvent
 {
     use EventTrait;
 

@@ -1,10 +1,7 @@
-<?php namespace Proweb21\Elevator\Model\Building;
+<?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\ObservableTrait;
-use Proweb21\Elevator\Events\Observable;
-use Proweb21\Elevator\Domain\Events\ElevatorCreated;
-use Proweb21\Elevator\Domain\Events\ElevatorHasMoved;
-use Proweb21\Elevator\Domain\Events\FlatCreated;
+use Proweb21\ObservableTrait;
+use Proweb21\Observable;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
@@ -86,7 +83,7 @@ final class Building implements Observable
     protected function publishFlatCreated(Flat $flat)
     {
         $this->publish(
-            new FlatCreated($flat->name, $flat->position, $this->name)
+            new FlatWasCreated($flat->name, $flat->position, $this->name)
         );
     }
 
@@ -176,7 +173,7 @@ final class Building implements Observable
     protected function publishElevatorCreated(Elevator $elevator)
     {
         $this->publish(
-            new ElevatorCreated($elevator->id, $elevator->flat->position, $this->name)
+            new ElevatorWasCreated($elevator->id, $elevator->flat->position, $this->name)
         );
     }
 

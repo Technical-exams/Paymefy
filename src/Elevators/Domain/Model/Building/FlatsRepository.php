@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\Building;
+<?php namespace Proweb21\Elevators\Model\Building;
 
 /**
  * Repository for Flat instances
