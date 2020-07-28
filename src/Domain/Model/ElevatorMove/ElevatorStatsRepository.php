@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\ElevatorStats;
+<?php namespace Proweb21\Elevator\Model\ElevatorMove;
 
 /**
  * Repository used to collect Elevator Stats
