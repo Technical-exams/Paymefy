@@ -3,6 +3,6 @@
 /**
  * Command called
  */
-interface Command extends Event
+interface Command extends Dispatchable
 {
 }
