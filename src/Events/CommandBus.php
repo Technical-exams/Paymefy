@@ -1,16 +1,14 @@
-<?php namespace Proweb21\Elevator\Application\ElevatorCalls;
+<?php namespace Proweb21\Elevator\Events;
 
 use Proweb21\Elevator\Events\EventBus;
 use Proweb21\Elevator\Events\EventDispatcherTrait;
 
-class ElevatorCallsBus
-    implements EventBus
+final class CommandBus implements EventBus
 {
     use EventDispatcherTrait;
 
     public function name(): string
     {
-        return 'elevator.calls.bus';
+        return 'elevator.command.bus';
     }
-
 }
