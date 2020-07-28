@@ -1,68 +1,114 @@
 <?php namespace Proweb21\Elevator\Model\ElevatorMove;
 
+use Proweb21\Elevator\Model\Building\Elevator;
+use Proweb21\Elevator\Model\Building\Flat;
+
 /**
- * DTO for persisting Elevator Stats taken during application execution
+ * Elevators' movement from one flat to another
+ *
+ * @property-read Elevator $elevator
+ * @property-read Flat $to_flat
+ * @property-read Flat $from_flat
+ * @property-read \DateTimeImmutable $moved_at
+ *
  */
 final class ElevatorMove
 {
     /**
-     * Which is the elevator
+     * Which is the elevator moved
      *
-     * @var string
+     * @var Elevator
      */
     protected $elevator;
 
     /**
-     * Which is the identifier of the flat on the building
-     * where elevator was when the stat was taken
+     * Which is the flat where elevator has moved to
      *
-     * @var int
+     * @var Flat
      */
-    protected $flat_name;
+    protected $to_flat;
 
     /**
-     * Which is the flat position in the building
+     * Which is the flat where elevator has moved from
      *
-     * @var int
+     * @var Flat
      */
-    protected $flat_no;
+    protected $from_flat;
+
 
     /**
-     * How many flats has moved the elevator during the application execution
-     *
-     * @var int
-     */
-    protected $total_moves;
-
-    /**
-     * How many flats has the elevator moved in its last trip
-     *
-     * @var int
-     */
-    protected $last_movement;
-
-    /**
-     * When the stats were taken
+     * When the elevator moved
      *
      * @var \DateTimeImmutable
      */
-    protected $last_update;
+    protected $moved_at;
 
 
-    public function __construct(string $elevator, int $flat_no, int $flat_name, int $moved, int $accumulated, \DateTimeImmutable $last_update)
+    public function __construct(Elevator $elevator, Flat $to_flat, Flat $from_flat, \DateTimeImmutable $moved_at)
     {
         $this->elevator = $elevator;
-        $this->flat_no = $flat_no;
-        $this->flat_name = $flat_name;
-        $this->total_moves = $accumulated;
-        $this->last_movement = $moved;
-        $this->last_update = $last_update;
+        $this->to_flat = $to_flat;
+        $this->from_flat = $from_flat;
+        $this->moved_at = $moved_at;
     }
 
+    /**
+     * Read-only properties accessor
+     *
+     * @param string $property
+     * @return void
+     */
     public function __get($property)
     {
-        if (property_exists(get_class($this), $property)) {
-            return $this->{$property};
+        switch ($property) {
+            case "elevator":
+                return $this->getElevator();
+            case "moved_at":
+                return $this->getMovedAt();
+            case "from_flat":
+                return $this->getFromFlat();
+            case "to_flat":
+                return $this->getToFlat();
         }
+    }
+
+    /**
+     * Getter for $elevator property
+     *
+     * @return Elevator
+     */
+    public function getElevator() : Elevator
+    {
+        return $this->elevator;
+    }
+
+    /**
+     * Getter for $moved_at property
+     *
+     * @return \DateTimeImmutable
+     */
+    public function getMovedAt() : \DateTimeImmutable
+    {
+        return $this->moved_at;
+    }
+
+    /**
+     * Getter for $from_flat property
+     *
+     * @return Flat
+     */
+    public function getFromFlat() : Flat
+    {
+        return $this->from_flat;
+    }
+
+    /**
+     * Getter for $to_flat property
+     *
+     * @return Flat
+     */
+    public function getToFlat() : Flat
+    {
+        return $this->to_flat;
     }
 }
