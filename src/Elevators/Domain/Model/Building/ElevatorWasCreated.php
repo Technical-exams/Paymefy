@@ -1,7 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\EventTrait;
-use Proweb21\ObservableEvent;
+use Proweb21\Elevator\Domain\DomainEvent;
 
 /**
  * ElevatorCreated Domain Event
@@ -11,14 +10,12 @@ use Proweb21\ObservableEvent;
  * @property-read \DateTimeImmutable $time
  * @property-read string $elevator_id
  * @property-read string $building
+ * 
+ * {@inheritDoc}
+ * 
  */
-final class ElevatorWasCreated implements ObservableEvent
+final class ElevatorWasCreated extends DomainEvent
 {
-    /**
-     * Provides $time property
-     * and time methods
-     */
-    use EventTrait;
 
     /**
      * Identifier of the Elevator
@@ -42,10 +39,9 @@ final class ElevatorWasCreated implements ObservableEvent
      */
     public function __construct(string $elevator_id, string $building)
     {
+        parent::__construct();
         $this->elevator_id = $elevator_id;
         $this->building = $building;
-        // Time is set to current SystemTime via EventTrait
-        $this->setTime();
     }
 
 
@@ -64,6 +60,8 @@ final class ElevatorWasCreated implements ObservableEvent
                 return $this->getElevatorId();
             case 'building':
                 return $this->getBuilding();
+            default:
+                return parent::__construct();
         }
     }
 

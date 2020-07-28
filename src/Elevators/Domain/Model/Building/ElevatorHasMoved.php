@@ -1,7 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\EventTrait;
-use Proweb21\ObservableEvent;
+use Proweb21\Elevator\Domain\DomainEvent;
 
 /**
  * ElevatorHasMoved Domain Event
@@ -12,14 +11,12 @@ use Proweb21\ObservableEvent;
  * @property-read string $elevator_id
  * @property-read int $current_flat
  * @property-read int $previous_flat
+ * 
+ * {@inheritDoc}
+ * 
  */
-final class ElevatorHasMoved implements ObservableEvent
+final class ElevatorHasMoved extends DomainEvent
 {
-    /**
-     * Provides $time property
-     * and time methods
-     */
-    use EventTrait;
 
     /**
      * Identifier of the Elevator
@@ -60,12 +57,11 @@ final class ElevatorHasMoved implements ObservableEvent
      */
     public function __construct(string $elevator_id, int $previous_flat, int $current_flat, string $building)
     {
+        parent::__construct();
         $this->elevator_id = $elevator_id;
         $this->previous_flat = $previous_flat;
         $this->current_flat = $current_flat;
         $this->building = $building;
-        // Time is set to current SystemTime via EventTrait
-        $this->setTime();
     }
 
 
@@ -88,6 +84,8 @@ final class ElevatorHasMoved implements ObservableEvent
                 return $this->getPreviousFlat();
             case 'building':
                 return $this->getBuilding();
+            default:
+                return parent::__get($property);
         }
     }
 

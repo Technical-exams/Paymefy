@@ -1,7 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\ObservableTrait;
-use Proweb21\Observable;
+use Proweb21\Elevator\Domain\DomainSubject;
 
 /**
  * Aggregate Root Entity for a Building with Elevators
@@ -10,9 +9,8 @@ use Proweb21\Observable;
  * @property-read ElevatorsCollection $elevators
  * @property-read Flat[] $flats
  */
-final class Building implements Observable
-{
-    use ObservableTrait;
+final class Building extends DomainSubject
+{    
 
     /**
      * The Buildings name (identifier)

@@ -1,7 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\EventTrait;
-use Proweb21\ObservableEvent;
+use Proweb21\Elevator\Domain\DomainEvent;
 
 /**
  * FlatCreated Domain Event
@@ -12,10 +11,12 @@ use Proweb21\ObservableEvent;
  * @property-read string $name
  * @property-read int $position
  * @property-read string $building
+ *
+ * {@inheritDoc}
+ *
  */
-final class FlatWasCreated implements ObservableEvent
+final class FlatWasCreated extends DomainEvent
 {
-    use EventTrait;
 
     /**
      * Flat name
@@ -40,10 +41,10 @@ final class FlatWasCreated implements ObservableEvent
 
     public function __construct(string $name, int $position, string $building)
     {
+        parent::__construct();
         $this->name = $name;
         $this->position = $position;
         $this->building = $building;
-        $this->setTime();
     }
 
     /**
@@ -64,6 +65,8 @@ final class FlatWasCreated implements ObservableEvent
             case "position":
                 return $this->getPosition();
             break;
+            default:
+                return parent::__get($property);
         }
     }
 
