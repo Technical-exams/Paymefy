@@ -43,6 +43,13 @@ final class ElevatorHasMoved implements ObservableEvent
      */
     protected $previous_flat;
 
+    /**
+     * Building's identifier
+     *
+     * @var string
+     */
+    protected $building;
+
 
     /**
      * Constructor
@@ -51,11 +58,12 @@ final class ElevatorHasMoved implements ObservableEvent
      * @param integer $previous_flat
      * @param integer $current_flat
      */
-    public function __construct(string $elevator_id, int $previous_flat, int $current_flat)
+    public function __construct(string $elevator_id, int $previous_flat, int $current_flat, string $building)
     {
         $this->elevator_id = $elevator_id;
         $this->previous_flat = $previous_flat;
         $this->current_flat = $current_flat;
+        $this->building = $building;
         // Time is set to current SystemTime via EventTrait
         $this->setTime();
     }
@@ -78,6 +86,8 @@ final class ElevatorHasMoved implements ObservableEvent
                 return $this->getCurrentFlat();
             case 'previous_flat':
                 return $this->getPreviousFlat();
+            case 'building':
+                return $this->getBuilding();
         }
     }
 
@@ -110,5 +120,15 @@ final class ElevatorHasMoved implements ObservableEvent
     public function getPreviousFlat(): int
     {
         return $this->previous_flat;
+    }
+
+    /**
+     * Getter for $building
+     *
+     * @return string
+     */
+    public function getBuilding() : string
+    {
+        return $this->building;
     }
 }

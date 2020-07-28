@@ -217,7 +217,7 @@ final class Building implements Observable
     protected function publishElevatorHasMoved(Elevator $elevator, Flat $previous_flat)
     {
         $this->publish(
-            new ElevatorHasMoved($elevator->id, $previous_flat->position, $elevator->flat->position)
+            new ElevatorHasMoved($elevator->id, $previous_flat->position, $elevator->flat->position, $this->name)
         );
     }
 
