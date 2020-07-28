@@ -5,7 +5,7 @@
  */
 interface ElevatorsRepository
 {
-    public function findOne(string $elevator, string $building) : ?Elevator;
+    public function findOne(string $elevator_id) : ?Elevator;
 
     public function findAll() : array;
 

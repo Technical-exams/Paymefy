@@ -46,7 +46,7 @@ implements Observer
      */
     public function onElevatorCreated(ElevatorCreated $event)
     {
-        $elevator = $this->elevators_repo->findOne($event->elevator_id,$event->building);
+        $elevator = $this->elevators_repo->findOne($event->elevator_id);
         $state = $this->states_repo->findOne($event->building);
 
         if ( is_null($elevator) || is_null($state) ){
