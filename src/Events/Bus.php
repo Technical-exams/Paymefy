@@ -1,8 +1,6 @@
 <?php namespace Proweb21\Elevator\Events;
 
-
-interface EventBus
-    extends EventDispatcher
+interface Bus extends Dispatcher
 {
 
     /**
@@ -11,5 +9,4 @@ interface EventBus
      * @return string
      */
     public function name():string;
-
 }
