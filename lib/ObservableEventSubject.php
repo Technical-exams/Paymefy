@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Events;
+<?php namespace Proweb21;
 
 /**
  * Interface for implementations of helper classes notifying Observer of an Observable update 

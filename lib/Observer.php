@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Events;
+<?php namespace Proweb21;
 
 /**
  * Interface for implementations of the observer in the Observer pattern

@@ -43,6 +43,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Proweb21\\": "lib/",
             "Proweb21\\Elevator\\": "src/",
             "Proweb21\\Elevator\\App\\Simulator\\": "tests/Integration/",
             "Proweb21\\Elevator\\Model\\": "src/Domain/Model"
