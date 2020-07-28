@@ -3,7 +3,7 @@
 /**
  * DTO for persisting Elevator Stats taken during application execution
  */
-final class ElevatorStats
+final class ElevatorMove
 {
     /**
      * Which is the elevator

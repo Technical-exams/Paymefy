@@ -3,15 +3,15 @@
 /**
  * Repository used to collect Elevator Stats
  */
-interface ElevatorStatsRepository
+interface ElevatorMoveRepository
 {
     /**
-     * Adds ElevatorStats to repository
+     * Adds ElevatorMove to repository
      *
-     * @param ElevatorsStats $stats
+     * @param ElevatorMove $stats
      * @return void
      */
-    public function add(ElevatorStats $stats);
+    public function add(ElevatorMove $stats);
 
     /**
      * Gets the stats of all Elevators
@@ -23,10 +23,10 @@ interface ElevatorStatsRepository
     /**
      * Gets the last stats of Elevator
      *
-     * @return ElevatorStats|null The elevator stats if found or null if no stats in the Repository
+     * @return ElevatorMove|null The elevator stats if found or null if no stats in the Repository
      *
      */
-    public function last(string $elevator): ?ElevatorStats;
+    public function last(string $elevator): ?ElevatorMove;
 
 
     /**
