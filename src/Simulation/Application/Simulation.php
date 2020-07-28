@@ -2,7 +2,7 @@
 
 use Proweb21\Elevator\Application\ApplicationService;
 
-interface Simulator extends ApplicationService
+interface Simulation extends ApplicationService
 {
     public function start();
 

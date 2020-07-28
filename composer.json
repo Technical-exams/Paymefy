@@ -46,7 +46,8 @@
             "Proweb21\\": "lib/",
             "Proweb21\\Elevator\\": ["src/","src/Common/"],
             "Proweb21\\Elevator\\App\\Simulator\\": "tests/Integration/",
-            "Proweb21\\Elevator\\Model\\": ["src/Domain/Model/", "src/Common/Domain/Model/"]
+            "Proweb21\\Elevator\\Model\\": ["src/Domain/Model/", "src/Common/Domain/Model/"],
+            "Proweb21\\Elevator\\Simulation\\Model\\": "src/Simulation/Domain/Model/"
 
         },
         "classmap": [

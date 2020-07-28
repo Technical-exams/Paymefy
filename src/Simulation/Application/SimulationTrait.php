@@ -1,13 +1,13 @@
 <?php namespace Proweb21\Elevator\Simulation\Application;
 
 /**
- * Trait implementing Simulator interface
+ * Trait implementing Simulation interface
  */
-trait SimulatorTrait
+trait SimulationTrait
 {
 
     /**
-     * Flag indication if the simulator is started
+     * Flag indication if the simulation is started
      *
      * @var boolean
      */
@@ -54,6 +54,6 @@ trait SimulatorTrait
      */
     protected function doRun()
     {
-        throw new \RuntimeException("You must override `doRun` method from SimulatorTrait in the class using it");
+        throw new \RuntimeException("You must override `doRun` method from SimulationTrait in the class using it");
     }
 }
