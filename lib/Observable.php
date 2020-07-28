@@ -13,5 +13,5 @@ interface Observable
      * @param ObservableEvent $event
      * @return void
      */
-    public function publish(ObservableEvent $event);
+    public function publish($event);
 }
