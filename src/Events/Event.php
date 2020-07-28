@@ -3,7 +3,7 @@
 /**
  * Event occurred
  */
-interface Event
+interface Event extends Dispatchable
 {
     /**
      * Gets the moment in time when the event occurred
