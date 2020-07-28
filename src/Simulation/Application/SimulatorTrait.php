@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Application\Simulators;
+<?php namespace Proweb21\Elevator\Simulation\Application;
 
 /**
  * Trait implementing Simulator interface
@@ -21,7 +21,9 @@ trait SimulatorTrait
      */
     public function start()
     {
-        if ($this->started()) return;
+        if ($this->started()) {
+            return;
+        }
         $this->started = true;
 
         $this->doRun();
@@ -47,12 +49,11 @@ trait SimulatorTrait
         $this->started = false;
     }
 
-    /** 
+    /**
      * Runs the simulation
      */
     protected function doRun()
     {
         throw new \RuntimeException("You must override `doRun` method from SimulatorTrait in the class using it");
     }
-
 }
