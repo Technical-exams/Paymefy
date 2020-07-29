@@ -1,7 +1,5 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainSubject;
-
 /**
  * Aggregate Root Entity for a Building with Elevators
  *
@@ -9,7 +7,7 @@ use Proweb21\Elevator\Domain\DomainSubject;
  * @property-read ElevatorsCollection $elevators
  * @property-read Flat[] $flats
  */
-final class Building extends DomainSubject
+final class Building
 {    
 
     /**
@@ -67,23 +65,10 @@ final class Building extends DomainSubject
         }
         $this->flats[$position] = new Flat($name, $position, $this);
 
-        $this->publishFlatCreated($this->flats[$position]);
-
         return $this->flats[$position];
     }
 
-    /**
-     * Notifies observers a FlatCreated domain event
-     *
-     * @param Flat $flat
-     * @return void
-     */
-    protected function publishFlatCreated(Flat $flat)
-    {
-        $this->publish(
-            new FlatWasCreated($flat->name, $flat->position, $this->name)
-        );
-    }
+    
 
 
     /**
@@ -156,23 +141,8 @@ final class Building extends DomainSubject
 
         $elevator = new Elevator($flat, $this);
         $this->elevators->add($elevator);
-
-        $this->publishElevatorCreated($elevator);
-
+        
         return $elevator;
-    }
-
-    /**
-     * Notifies observers an ElevatorCreated domain event
-     *
-     * @param Elevator $elevator
-     * @return void
-     */
-    protected function publishElevatorCreated(Elevator $elevator)
-    {
-        $this->publish(
-            new ElevatorWasCreated($elevator->id, $elevator->flat->position, $this->name)
-        );
     }
 
 
@@ -192,29 +162,15 @@ final class Building extends DomainSubject
         $this->validateElevator($elevator);
 
         $previous_flat = $elevator->flat;
-        if ($previous_flat->position === $elevator->flat->position) {
+        if (Flat::equals($previous_flat,$elevator->flat)) {
             throw new \AssertionError("Cannot move an elevator which is already in the destination flat");
         }
         $elevator->move($to_flat);
-
-        $this->publishElevatorHasMoved($elevator, $previous_flat);
-
+        
         return $elevator;
     }
 
-    /**
-     * Notifies observers an ElevatorHasMoved domain event
-     *
-     * @param Elevator $elevator
-     * @param Flat $previous_flat
-     * @return void
-     */
-    protected function publishElevatorHasMoved(Elevator $elevator, Flat $previous_flat)
-    {
-        $this->publish(
-            new ElevatorHasMoved($elevator->id, $previous_flat->position, $elevator->flat->position, $this->name)
-        );
-    }
+    
 
 
 

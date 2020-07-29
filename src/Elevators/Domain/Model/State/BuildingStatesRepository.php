@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\BuildingState;
+<?php namespace Proweb21\Elevators\Model\State;
 
 /**
  * Repository for BuildingState instances

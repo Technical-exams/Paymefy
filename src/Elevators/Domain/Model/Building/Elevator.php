@@ -1,5 +1,7 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
+use Proweb21\Elevator\Domain\DomainSubject;
+
 /**
  * Elevator is an Entity gathering a flat
  *
@@ -9,7 +11,7 @@
  * @property-read string $id
  * @property-read Flat $flat
  */
-final class Elevator
+final class Elevator extends DomainSubject
 {
 
     /**
@@ -41,10 +43,26 @@ final class Elevator
      */
     public function __construct(Flat $current_flat, Building $building)
     {
+        $this->serial_no = uniqid();
         $this->building = $building;
         $this->move($current_flat);
-        $this->serial_no = uniqid();
+        
+        $this->publishElevatorCreated();        
     }
+
+    /**
+     * Notifies observers an ElevatorWasCreated domain event
+     *
+     * @return void
+     */
+    protected function publishElevatorCreated()
+    {
+        $this->publish(
+            new ElevatorWasCreated($this->serial_no, $this->building->name)
+        );
+    }
+
+
 
     /**
      * Magic getter for getters shortcutting
@@ -103,7 +121,25 @@ final class Elevator
         if (!is_null($this->flat) && $this->building !== $to_flat->building) {
             throw new \AssertionError("This flat is not in the building");
         }
+        $previous_flat = $this->flat;
+
         $this->flat = $to_flat;
+
+        $this->publishElevatorHasMoved($previous_flat);
+
         return $this;
+    }
+
+    /**
+     * Notifies observers an ElevatorHasMoved domain event
+     *
+     * @param Flat $previous_flat
+     * @return void
+     */
+    protected function publishElevatorHasMoved(Flat $previous_flat)
+    {
+        $this->publish(
+            new ElevatorHasMoved($this->serial_no, $previous_flat->position, $this->flat->position, $this->building->name)
+        );
     }
 }
