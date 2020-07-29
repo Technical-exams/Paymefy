@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Domain\Strategies;
+<?php namespace Proweb21\Elevators\Domain\Lookup;
 
 use Proweb21\Elevators\Model\Building\Elevator;
 use Proweb21\Elevators\Model\Building\Flat;

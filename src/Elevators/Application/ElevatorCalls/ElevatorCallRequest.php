@@ -1,7 +1,6 @@
-<?php namespace Proweb21\Elevator\Application\ElevatorCalls;
+<?php namespace Proweb21\Elevators\Application\ElevatorCalls;
 
-use Proweb21\Elevator\Events\Command;
-use Proweb21\Elevator\Events\EventTrait;
+use Proweb21\Command;
 
 /**
  * Elevator Called Command
@@ -13,9 +12,8 @@ use Proweb21\Elevator\Events\EventTrait;
  * @property-read string $calling_flat
  * @property-read string $destination_flat
  */
-final class ElevatorCalled implements Command
+final class ElevatorCallRequest implements Command
 {
-    use EventTrait;
 
     /**
      * Flat id where elevator is called
@@ -51,7 +49,6 @@ final class ElevatorCalled implements Command
         $this->calling_flat = $calling_flat;
         $this->destination_flat = $destination_flat;
         $this->building = $building;
-        $this->setTime(); // System time is acquired
     }
 
     /**
@@ -69,8 +66,6 @@ final class ElevatorCalled implements Command
                 return $this->getCallingFlat();
             case "destination_flat":
                 return $this->getDestinationFlat();
-            case "time":
-                return $this->getTime();
         }
     }
 
