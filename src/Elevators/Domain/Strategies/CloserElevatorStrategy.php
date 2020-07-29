@@ -1,8 +1,8 @@
 <?php namespace Proweb21\Elevator\Domain\Strategies;
 
-use Proweb21\Elevator\Model\Building\Elevator;
-use Proweb21\Elevator\Model\Building\Flat;
-use Proweb21\Elevator\Model\BuildingState\BuildingState;
+use Proweb21\Elevators\Model\Building\Elevator;
+use Proweb21\Elevators\Model\Building\Flat;
+use Proweb21\Elevators\Model\State\BuildingState;
 
 class CloserElevatorStrategy implements ElevatorLookupStrategy
 {
