@@ -1,6 +1,7 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainEvent;
+use Proweb21\Elevators\Common\Domain\DomainEvent;
+use Proweb21\ObservableEvent;
 
 /**
  * ElevatorCreated Domain Event
@@ -14,7 +15,7 @@ use Proweb21\Elevator\Domain\DomainEvent;
  * {@inheritDoc}
  * 
  */
-final class ElevatorWasCreated extends DomainEvent
+final class ElevatorWasCreated extends DomainEvent implements ObservableEvent
 {
 
     /**
