@@ -1,7 +1,7 @@
 <?php namespace Proweb21\Elevators\Model\State;
 
 
-use Proweb21\Elevator\Domain\DomainEventObserver;
+use Proweb21\Elevators\Common\Domain\DomainEventObserver;
 // use Proweb21\Elevator\Infrastructure\Domain\Model\Building\InMemory\ElevatorsRepository;
 use Proweb21\Elevators\Model\Building\Elevator;
 use Proweb21\Elevators\Model\Building\ElevatorHasMoved;
@@ -40,7 +40,7 @@ class ElevatorHasMovedObserver extends DomainEventObserver
      * @return void
      * 
      * @throws \RuntimeException if $elevator is not an Elevator instance
-     * or $event is not a Domain Event instance
+     * or $event is not a ElevatorHasMoved instance
      * 
      */
     public function update($elevator, $event)
