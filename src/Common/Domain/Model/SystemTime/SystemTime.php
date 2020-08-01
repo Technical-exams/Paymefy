@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Model\SystemTime;
+<?php namespace Proweb21\Elevators\Common\Model\SystemTime;
 
 /**
  * Singleton class service intended to provide the current application time

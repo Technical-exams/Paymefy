@@ -1,6 +1,6 @@
-<?php namespace Proweb21\Elevator\Model\SystemTime;
+<?php namespace Proweb21\Elevators\Common\Model\SystemTime;
 
-use Proweb21\Elevator\Domain\DomainService;
+use Proweb21\Elevators\Common\Domain\DomainService;
 
 /**
  * Provider for accessing SystemTime
