@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Application\SyncTime;
+<?php namespace Proweb21\Elevators\Common\Application\SyncTime;
 
 use Proweb21\Command;
 
