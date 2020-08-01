@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Buses;
+<?php namespace Proweb21\Elevators\Common\Infrastructure\Buses;
 
 use Proweb21\Bus;
 use Proweb21\CommandBus;
