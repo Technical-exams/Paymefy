@@ -1,9 +1,10 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainEvent;
+use Proweb21\Elevators\Common\Domain\DomainEvent;
+use Proweb21\Event;
 
 /**
- * ElevatorHasMoved Domain Event
+ * A DTO Domain Event indicating that an Elevator has Moved
  *
  * This event occurs when an elevator is moved in a building
  *
@@ -15,7 +16,7 @@ use Proweb21\Elevator\Domain\DomainEvent;
  * {@inheritDoc}
  * 
  */
-final class ElevatorHasMoved extends DomainEvent
+final class ElevatorHasMoved extends DomainEvent implements Event
 {
 
     /**
@@ -51,17 +52,16 @@ final class ElevatorHasMoved extends DomainEvent
     /**
      * Constructor
      *
-     * @param string $elevator_id
-     * @param integer $previous_flat
-     * @param integer $current_flat
+     * @param Elevator $elevator which has been the elevator 
+     * @param Flat $previous_flat
      */
-    public function __construct(string $elevator_id, int $previous_flat, int $current_flat, string $building)
+    public function __construct(Elevator $elevator, Flat $previous_flat)
     {
-        parent::__construct();
-        $this->elevator_id = $elevator_id;
-        $this->previous_flat = $previous_flat;
-        $this->current_flat = $current_flat;
-        $this->building = $building;
+        parent::__construct($elevator);
+        $this->elevator_id = $elevator->id;
+        $this->previous_flat = $previous_flat->position;
+        $this->current_flat = $elevator->flat->position;
+        $this->building = $elevator->building;
     }
 
 

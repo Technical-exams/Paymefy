@@ -139,7 +139,7 @@ final class Elevator extends DomainSubject
     protected function notifyElevatorHasMoved(Flat $previous_flat)
     {
         $this->notify(
-            new ElevatorHasMoved($this->serial_no, $previous_flat->position, $this->flat->position, $this->building->name)
+            new ElevatorHasMoved($this, $previous_flat)
         );
     }
 }
