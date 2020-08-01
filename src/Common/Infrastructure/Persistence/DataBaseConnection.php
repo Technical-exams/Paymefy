@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Common\Persistence;
+<?php namespace Proweb21\Elevators\Common\Infrastructure\Persistence;
 
 /**
  * DBAL Port for specific driver database connection Adapters

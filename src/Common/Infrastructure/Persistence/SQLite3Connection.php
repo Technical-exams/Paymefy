@@ -1,12 +1,9 @@
-<?php namespace Proweb21\Elevator\Infrastructure\Common\Persistence\SQLite;
-
-use Proweb21\Elevator\Infrastructure\Common\Persistence\DataBaseConnection;
+<?php namespace Proweb21\Elevators\Common\Infrastructure\Persistence;
 
 /**
  * DBAL Adapter for SQLite3 databases
  */
-final class SQLite3DataBaseConnection
-    implements DataBaseConnection
+final class SQLite3Connection implements DataBaseConnection
 {
     protected $file;
 
@@ -21,42 +18,39 @@ final class SQLite3DataBaseConnection
 
     public function __construct(string $file, string $password = "")
     {
-        
-        if (file_exists($file))
+        if (file_exists($file)) {
             $this->file = $file;
+        }
 
         $this->password = $password;
 
 
         set_error_handler(function ($severity, $message, $file, $line) {
             throw new \ErrorException($message, $severity, $severity, $file, $line);
-        },\E_WARNING);
+        }, \E_WARNING);
 
-        try{
+        try {
             $this->open();
-        }finally{
+        } finally {
             restore_error_handler();
         }
-
     }
 
 
     public function open()
-    {        
+    {
+        if ($this->connected()) {
+            return;
+        }
 
-
-        if ($this->connected()) return;
-
-        try{
-            $this->driver = new \SQLite3($this->file,\SQLITE3_OPEN_READWRITE,$this->password);
-
-        }catch(\ErrorException $error){
+        try {
+            $this->driver = new \SQLite3($this->file, \SQLITE3_OPEN_READWRITE, $this->password);
+        } catch (\ErrorException $error) {
             $this->driver = null;
             return;
         }
 
-        if (! empty($this->password) ) {
-
+        if (! empty($this->password)) {
             try {
                 $this->driver->loadExtension('sqlcipher.so');
             } catch (\ErrorException $error) {
@@ -70,7 +64,6 @@ final class SQLite3DataBaseConnection
         // JOURNAL MODE IS SET TO WALL
         // PLEASE READ https://www.sqlite.org/wal.html
         $this->driver->exec('PRAGMA journal_mode = wal;');
-
     }
 
     public function connected(): bool
@@ -82,46 +75,48 @@ final class SQLite3DataBaseConnection
     {
         try {
             $this->driver->close();
-        }finally{
+        } finally {
             unset($this->driver);
             $this->driver = null;
         }
-        
     }
 
 
     public function query(string $query)
     {
-        if (! $this->connected()) return FALSE;
+        if (! $this->connected()) {
+            return false;
+        }
 
         set_error_handler(function ($severity, $message, $file, $line) {
             throw new \ErrorException($message, $severity, $severity, $file, $line);
-        },\E_ERROR | E_WARNING | E_NOTICE);
+        }, \E_ERROR | E_WARNING | E_NOTICE);
 
         try {
-            $result = $this->driver->query($query);;
+            $result = $this->driver->query($query);
+            ;
             return $result;
-        }finally{
+        } finally {
             restore_error_handler();
         }
-            
     }
 
     public function execute(string $stmt)
     {
-        if (! $this->connected()) return FALSE;
+        if (! $this->connected()) {
+            return false;
+        }
 
         set_error_handler(function ($severity, $message, $file, $line) {
             throw new \ErrorException($message, $severity, $severity, $file, $line);
-        },\E_ERROR | E_WARNING | E_NOTICE);
+        }, \E_ERROR | E_WARNING | E_NOTICE);
 
         try {
-            $this->driver->exec($stmt);;
+            $this->driver->exec($stmt);
+            ;
             return true;
-        }finally{
+        } finally {
             restore_error_handler();
         }
-            
     }
-
 }
