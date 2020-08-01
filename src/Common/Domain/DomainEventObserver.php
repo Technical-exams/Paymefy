@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Domain;
+<?php namespace Proweb21\Elevators\Common\Domain;
 
 use Proweb21\Observer;
 
@@ -14,7 +14,7 @@ abstract class DomainEventObserver implements Observer
      */
     public function observe(string $observable_class)
     {
-        DomainEventPublisher::instance()->attachObserver($this, $observable_class);
+        DomainEvents::instance()->attachObserver($this, $observable_class);
     }
 
     /**

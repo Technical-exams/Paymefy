@@ -1,6 +1,6 @@
-<?php namespace Proweb21\Elevator\Domain;
+<?php namespace Proweb21\Elevators\Common\Domain;
 
-use Proweb21\Elevator\Model\SystemTime\SystemTimeProvider;
+use Proweb21\Elevators\Common\Model\SystemTime\SystemTimeProvider;
 use Proweb21\ObservableEvent;
 
 /**
