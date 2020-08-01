@@ -15,14 +15,13 @@ interface ObservableEventSubject
      * @param string $observable class name of an observable
      * @return void
      */
-    public function attachObserver(Observer $observer, string $observable);
+    public function attachObserver($observer, string $observable);
 
     /**
      * Notifies an ObservableEvent ocurred on Observable subject to all observers
      *
-     * @param Observable $subject
      * @param ObservableEvent $event
      * @return void
      */
-    public function updateObservers(Observable $subject, ObservableEvent $event);
+    public function updateObservers($event);
 }

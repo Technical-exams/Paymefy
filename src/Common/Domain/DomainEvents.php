@@ -55,7 +55,7 @@ final class DomainEvents implements ObservableEventSubject
      * 
      * @throws \AssertionError when given observer is not an instance of DomainEventObserver
      */        
-    public function attachObserver(Observer $observer, string $domain_subject)
+    public function attachObserver($observer, string $domain_subject)
     {
         // PRECONDITION
         if ( !($observer instanceof DomainEventObserver) )
@@ -70,21 +70,23 @@ final class DomainEvents implements ObservableEventSubject
     /**
      * Notifies an DomainEvent to all observers of an DomainSubject
      *
-     * @param DomainSubject $subject
      * @param DomainEvent $event
      * @return void
      * 
      * @throws \AssertionError When $subject is not a DomainSubject instance
      *                         or when $event is not a DomainEvent instance
      */
-    public function updateObservers(Observable $subject, ObservableEvent $event)
+    public function updateObservers($event)
     {
         // PRECONDITION
-        if ( !($subject instanceof DomainSubject))
-            throw new \AssertionError("Cannot update observers of an object which is not a DomainSubject");
-        if ( !($subject instanceof DomainEvent))
+        if ( !($event instanceof DomainEvent))
             throw new \AssertionError("Cannot update observers of an event which is not an DomainEvent");
-                
+
+        $subject = $event->getSubject();
+
+        if ( !($subject instanceof DomainSubject))
+        throw new \AssertionError("Cannot update observers of an object which is not a DomainSubject");
+
         $class=get_class($subject);
         if (!array_key_exists($class, $this->observers)) {
             return;

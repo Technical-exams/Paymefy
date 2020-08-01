@@ -1,6 +1,7 @@
 <?php namespace Proweb21\Elevators\Common\Domain;
 
 use Proweb21\Elevators\Common\Model\SystemTime\SystemTimeProvider;
+use Proweb21\Event;
 use Proweb21\ObservableEvent;
 
 /**
@@ -12,7 +13,7 @@ use Proweb21\ObservableEvent;
  *
  * @property-read \DateTimeImmutable $time
  */
-abstract class DomainEvent implements ObservableEvent
+abstract class DomainEvent extends ObservableEvent implements Event
 {
     
     /**
@@ -46,12 +47,21 @@ abstract class DomainEvent implements ObservableEvent
 
     /**
      * Creates an instance of DomainEvent
-     *
      * with the time set to SystemTime
+     * 
+     * @param DomainSubject $subject
+     * 
+     * @throws \AssertionError if $subject is not a DomainEvent instance
      */
-    public function __construct()
+    public function __construct(DomainSubject $subject)
     {
+        // PRECONDITION
+        if ( ! ($subject instanceof DomainSubject))
+            throw new \AssertionError("Cannot create a DomainEvent occurred on an object which is not a DomainSubject");
+
         $system_time = new SystemTimeProvider();
         $this->time = $system_time();
+
+        parent::__construct($subject);
     }
 }
