@@ -2,19 +2,17 @@
 
 trait DispatcherTrait
 {
-    protected $subscriptions = [];
+    protected $subscribers = [];
 
     /**
      * {@inheritDoc}
      *
      */
-    public function subscribe(string $dispatchable_class, Handler $handler)
+    public function subscribe(Subscriber $subscriber)
     {
-        if (!array_key_exists($dispatchable_class, $this->subscriptions)) {
-            $this->subscriptions[$dispatchable_class] = [];
-        }
-        
-        $this->subscriptions[$dispatchable_class][] = $handler;
+        if (! in_array($subscriber, $this->subscribers)) {
+            $this->subscribers[] = $subscriber;
+        }                
     }
 
     /**
@@ -23,19 +21,17 @@ trait DispatcherTrait
      */
     public function clearSubscribers()
     {
-        $this->subscriptions = [];
+        $this->subscribers = [];
     }
 
     /**
      * {@inheritDoc}
      *
      */
-    public function dispatch(Dispatchable $object)
-    {
-        if (array_key_exists(get_class($object), $this->subscriptions)) {
-            foreach ($this->subscriptions[get_class($object)] as $handler) {
-                $handler->handle($object);
-            }
-        }
+    public function dispatch($object)
+    {        
+        foreach ($this->subscribers as $subscriber) {
+            $subscriber->handle($object);
+        }        
     }
 }

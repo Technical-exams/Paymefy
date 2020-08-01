@@ -2,9 +2,27 @@
 
 interface Dispatcher
 {
-    public function subscribe(string $dispatchable_class, Handler $handler);
+    /**
+     * Subscribes a subscriber to message broadcasting
+     *
+     * @param Subscriber $subscriber
+     * @return void
+     */
+    public function subscribe($subscriber);
 
+
+    /**
+     * Frees dispatcher from subscribers
+     *
+     * @return void
+     */
     public function clearSubscribers();
 
-    public function dispatch(Dispatchable $object);
+    /**
+     * Dispatch a dispatchable message $object to subscribers
+     *
+     * @param Dispatchable $object
+     * @return void
+     */
+    public function dispatch($object);
 }
