@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Simulation\Model\HourClockTime;
+<?php namespace Proweb21\Elevators\Simulation\Model\HourClockTime;
 
 /**
  * ValueObject representing the time in an HourClock

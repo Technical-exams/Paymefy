@@ -1,6 +1,6 @@
-<?php namespace Proweb21\Elevator\Simulation\Model\HourClockTime;
+<?php namespace Proweb21\Elevators\Simulation\Model\HourClockTime;
 
-use Proweb21\Elevator\Domain\DomainService;
+use Proweb21\Elevators\Common\Domain\DomainService;
 
 /**
  * Provides HourClock Times expressed as HourClockTime objects

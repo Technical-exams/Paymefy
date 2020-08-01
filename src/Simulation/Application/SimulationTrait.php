@@ -1,4 +1,4 @@
-<?php namespace Proweb21\Elevator\Simulation\Application;
+<?php namespace Proweb21\Elevators\Simulation\Application;
 
 /**
  * Trait implementing Simulation interface
@@ -35,7 +35,7 @@ trait SimulationTrait
      * {@inheritDoc}
      *
      */
-    public function started(): bool
+    public function isStarted(): bool
     {
         return ($this->started);
     }

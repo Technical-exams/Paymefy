@@ -1,10 +1,10 @@
-<?php namespace Proweb21\Elevator\Simulation\Application\Chrono;
+<?php namespace Proweb21\Elevators\Simulation\Application\HourClock;
 
-use Proweb21\Elevator\Simulation\Application\Simulation;
-use Proweb21\Elevator\Simulation\Application\SimulationTrait;
-use Proweb21\Elevator\Application\SyncTime\SyncTimeCommand;
-use Proweb21\Elevator\Infrastructure\Buses\TimeBus;
-use Proweb21\Elevator\Simulation\Model\HourClockTime\HourClockTimeProvider;
+use Proweb21\Elevators\Simulation\Application\Simulation;
+use Proweb21\Elevators\Simulation\Application\SimulationTrait;
+use Proweb21\Elevators\Common\Application\SyncTime\SyncTimeCommand;
+use Proweb21\Elevators\Common\Infrastructure\Buses\TimeBus;
+use Proweb21\Elevators\Simulation\Model\HourClockTime\HourClockTimeProvider;
 
 /**
  * Simulates the pass of the system time from an start time to and end time
@@ -55,8 +55,8 @@ class HourClockSimulation implements Simulation
     public function __construct(TimeBus $bus, \DateTimeImmutable $start_time, \DateTimeImmutable $end_time)
     {
         $this->bus = $bus;
-        $this->start_time;
-        $this->end_time;
+        $this->start_time = $start_time;
+        $this->end_time = $end_time;
 
         $diff = date_diff($this->end_time, $this->start_time, true);
         // How many minutes must be provided
@@ -81,8 +81,8 @@ class HourClockSimulation implements Simulation
         $hour = $this->start_time->format('H');
         $minute = $this->start_time->format('i');
 
-        foreach ($this->clock($hour, $minute) as $clock_time) {
-            if (!$this->started()) {
+        foreach (($this->clock)($hour, $minute) as $clock_time) {
+            if (!$this->isStarted()) {
                 break;
             }
             $command = new SyncTimeCommand($clock_time["hour"], $clock_time["minute"]);
