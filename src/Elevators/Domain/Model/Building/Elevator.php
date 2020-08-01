@@ -1,6 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainSubject;
+use Proweb21\Elevators\Common\Domain\DomainSubject;
 
 /**
  * Elevator is an Entity gathering a flat
@@ -47,7 +47,7 @@ final class Elevator extends DomainSubject
         $this->building = $building;
         $this->move($current_flat);
         
-        $this->publishElevatorCreated();        
+        $this->notifyElevatorCreated();        
     }
 
     /**
@@ -55,9 +55,9 @@ final class Elevator extends DomainSubject
      *
      * @return void
      */
-    protected function publishElevatorCreated()
+    protected function notifyElevatorCreated()
     {
-        $this->publish(
+        $this->notify(
             new ElevatorWasCreated($this->serial_no, $this->building->name)
         );
     }
@@ -125,7 +125,7 @@ final class Elevator extends DomainSubject
 
         $this->flat = $to_flat;
 
-        $this->publishElevatorHasMoved($previous_flat);
+        $this->notifyElevatorHasMoved($previous_flat);
 
         return $this;
     }
@@ -136,9 +136,9 @@ final class Elevator extends DomainSubject
      * @param Flat $previous_flat
      * @return void
      */
-    protected function publishElevatorHasMoved(Flat $previous_flat)
+    protected function notifyElevatorHasMoved(Flat $previous_flat)
     {
-        $this->publish(
+        $this->notify(
             new ElevatorHasMoved($this->serial_no, $previous_flat->position, $this->flat->position, $this->building->name)
         );
     }

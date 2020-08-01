@@ -1,9 +1,9 @@
-<?php namespace Proweb21\Elevator\Domain;
+<?php namespace Proweb21\Elevators\Common\Domain;
 
 use Proweb21\Observable;
 
 /**
- * Es una classe abstarcta observable que usa el DomainEventPublisher per a publicar
+ * Es una classe abstarcta observable que usa el DomainEvents per a publicar
  */
 abstract class DomainSubject implements Observable
 {
@@ -14,12 +14,12 @@ abstract class DomainSubject implements Observable
      * @param DomainEvent $event
      * @throws AssertionError
      */
-    public function publish($event)
+    public function notify($event)
     {
         if (! ($event instanceof DomainEvent)) {
             throw new \AssertionError("Cannot publish an event which is not a DomainEvent");
         }
 
-        DomainEventPublisher::instance()->updateObservers($this, $event);
+        DomainEvents::instance()->updateObservers($this, $event);
     }
 }

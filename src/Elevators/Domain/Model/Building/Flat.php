@@ -1,6 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainSubject;
+use Proweb21\Elevators\Common\Domain\DomainSubject;
 
 /**
  * Flat in a Building
@@ -61,7 +61,7 @@ final class Flat extends DomainSubject
         $this->position = $position;
         $this->building = $building;
 
-        $this->publishFlatCreated($this->flats[$position]);
+        $this->notifyFlatCreated($this->flats[$position]);
     }
 
 /**
@@ -70,9 +70,9 @@ final class Flat extends DomainSubject
      * @param Flat $flat
      * @return void
      */
-    protected function publishFlatCreated()
+    protected function notifyFlatCreated()
     {
-        $this->publish(
+        $this->notify(
             new FlatWasCreated($this->name, $this->position, $this->building->name)
         );
     }
