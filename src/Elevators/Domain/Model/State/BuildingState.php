@@ -1,6 +1,6 @@
 <?php namespace Proweb21\Elevators\Model\State;
 
-use Proweb21\Elevator\Model\Building\Building;
+use Proweb21\Elevators\Model\Building\Building;
 use Proweb21\Elevators\Model\Building\Elevator;
 use Proweb21\Elevators\Model\Building\ElevatorsCollection;
 use Proweb21\Elevators\Model\Building\Flat;
@@ -100,7 +100,7 @@ final class BuildingState
         $result = false;
 
         if ( ! isset($this->flat_states[$flat]) )
-            throw new \InvalidArgumentException("Flat ${flat->name}, is not valid");
+            throw new \InvalidArgumentException("Flat $flat->name, is not valid");
 
         $flat_state = $this->flat_states->seek($flat,$offset);
         if (FALSE !== $flat_state){
