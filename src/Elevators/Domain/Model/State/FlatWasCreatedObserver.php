@@ -1,8 +1,8 @@
 <?php namespace Proweb21\Elevators\Model\State;
 
 
-use Proweb21\Elevator\Domain\DomainEventObserver;
-// use Proweb21\Elevator\Infrastructure\Domain\Model\Building\InMemory\FlatsRepository;
+use Proweb21\Elevators\Common\Domain\DomainEventObserver;
+// use Proweb21\Elevators\Model\Building\FlatsRepository;
 use Proweb21\Elevators\Model\Building\Flat;
 use Proweb21\Elevators\Model\Building\FlatWasCreated;
 
