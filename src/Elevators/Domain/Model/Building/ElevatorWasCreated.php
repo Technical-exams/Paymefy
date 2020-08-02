@@ -1,10 +1,10 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
 use Proweb21\Elevators\Common\Domain\DomainEvent;
-use Proweb21\ObservableEvent;
+use Proweb21\Event;
 
 /**
- * ElevatorCreated Domain Event
+ * A DTO Domain Event indicating that an Elevator was Created
  *
  * This event occurs when an elevator is created in a building
  *
@@ -15,7 +15,7 @@ use Proweb21\ObservableEvent;
  * {@inheritDoc}
  * 
  */
-final class ElevatorWasCreated extends DomainEvent implements ObservableEvent
+final class ElevatorWasCreated extends DomainEvent implements Event
 {
 
     /**
@@ -35,14 +35,14 @@ final class ElevatorWasCreated extends DomainEvent implements ObservableEvent
     /**
      * Constructor
      *
-     * @param string $elevator_id
-     * @param string $building
+     * @param Elevator $elevator
+     *
      */
-    public function __construct(string $elevator_id, string $building)
+    public function __construct(Elevator $elevator)
     {
-        parent::__construct();
-        $this->elevator_id = $elevator_id;
-        $this->building = $building;
+        parent::__construct($elevator);
+        $this->elevator_id = $elevator->id;
+        $this->building = $elevator->building->name;
     }
 
 
@@ -62,7 +62,7 @@ final class ElevatorWasCreated extends DomainEvent implements ObservableEvent
             case 'building':
                 return $this->getBuilding();
             default:
-                return parent::__construct();
+                return parent::__get($property);
         }
     }
 

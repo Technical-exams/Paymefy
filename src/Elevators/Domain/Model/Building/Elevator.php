@@ -58,7 +58,7 @@ final class Elevator extends DomainSubject
     protected function notifyElevatorCreated()
     {
         $this->notify(
-            new ElevatorWasCreated($this->serial_no, $this->building->name)
+            new ElevatorWasCreated($this)
         );
     }
 
