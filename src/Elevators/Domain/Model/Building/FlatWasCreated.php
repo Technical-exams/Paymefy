@@ -1,9 +1,10 @@
 <?php namespace Proweb21\Elevators\Model\Building;
 
-use Proweb21\Elevator\Domain\DomainEvent;
+use Proweb21\Elevators\Common\Domain\DomainEvent;
+use Proweb21\Event;
 
 /**
- * FlatCreated Domain Event
+ * A DTO Domain Event indicating that a Flat was Created
  *
  * This event occurs when an flat is created in a building
  *
@@ -15,7 +16,7 @@ use Proweb21\Elevator\Domain\DomainEvent;
  * {@inheritDoc}
  *
  */
-final class FlatWasCreated extends DomainEvent
+final class FlatWasCreated extends DomainEvent implements Event
 {
 
     /**
@@ -39,12 +40,12 @@ final class FlatWasCreated extends DomainEvent
      */
     protected $building;
 
-    public function __construct(string $name, int $position, string $building)
+    public function __construct(Flat $flat)
     {
-        parent::__construct();
-        $this->name = $name;
-        $this->position = $position;
-        $this->building = $building;
+        parent::__construct($flat);
+        $this->name = $flat->name;
+        $this->position = $flat->position;
+        $this->building = $flat->building->name;
     }
 
     /**

@@ -61,7 +61,7 @@ final class Flat extends DomainSubject
         $this->position = $position;
         $this->building = $building;
 
-        $this->notifyFlatCreated($this->flats[$position]);
+        $this->notifyFlatCreated();
     }
 
 /**
@@ -73,7 +73,7 @@ final class Flat extends DomainSubject
     protected function notifyFlatCreated()
     {
         $this->notify(
-            new FlatWasCreated($this->name, $this->position, $this->building->name)
+            new FlatWasCreated($this)
         );
     }
 
